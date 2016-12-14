@@ -6,6 +6,8 @@ Window::Window(const char * title, size_t width, size_t height)
 	if (!glfwInit())
 		throw "failed to init glfw";
 
+	glfwSwapInterval(1);
+
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
 	window = glfwCreateWindow(width, height, title, NULL, NULL);
