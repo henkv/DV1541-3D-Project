@@ -1,22 +1,53 @@
 #include "Window.h"
 
+void Window::CallbackHandler::error(int error, const char * message)
+{
+	throw message;
+}
+
+Window::CallbackHandler::CallbackHandler()
+{
+	static bool first = true;
+	if (first)
+	{
+		glfwSetErrorCallback(error);
+		first = false;
+	}
+}
+
+
+int Window::nrOfWindows = 0;
+
 
 Window::Window(const char * title, size_t width, size_t height)
 {
-	if (!glfwInit())
+	if (nrOfWindows == 0 && !glfwInit())
 		throw "failed to init glfw";
-
-	glfwSwapInterval(1);
-
+	
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
 	window = glfwCreateWindow(width, height, title, NULL, NULL);
+
 	if (!window)
 		throw "failed to create window";
+
+	glfwMakeContextCurrent(window);
+	gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+	glfwSwapInterval(1);
+
+	nrOfWindows++;
 }
 
 Window::~Window()
 {
+	glfwDestroyWindow(window);
+	nrOfWindows--;
+
+	if (nrOfWindows == 0)
+		glfwTerminate();
 }
 
 void Window::use()
@@ -26,14 +57,7 @@ void Window::use()
 
 bool Window::isOpen()
 {
-	bool shouldClose = glfwWindowShouldClose(window);
-
-	if (shouldClose)
-	{
-		glfwDestroyWindow(window);
-	}
-
-	return !shouldClose;
+	return !glfwWindowShouldClose(window);
 }
 
 void Window::swapBuffers()
@@ -45,3 +69,4 @@ void Window::pollEvents()
 {
 	glfwPollEvents();
 }
+

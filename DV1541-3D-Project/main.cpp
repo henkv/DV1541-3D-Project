@@ -1,21 +1,39 @@
-#include <GL\glew.h>
+#include <stdio.h>
+#include <glad\glad.h>
 
 #include "Window.h"
+#include "Shader.h"
+
+void render();
 
 int main()
 {
-	Window window = { "DV1541 3D Project", 800, 600 };
-
-	window.use();
-	glewInit();
-
-	while (window.isOpen())
+	try
 	{
-		window.pollEvents();
+		Window window = { "DV1541 3D Project", 800, 600 };
+		Shader shader = { "VertexShader.glsl", "FragmentShader.glsl" };
 
 
-		window.swapBuffers();
+		while (window.isOpen())
+		{
+			window.pollEvents();
+
+			render();
+
+			window.swapBuffers();
+		}
 	}
-
+	catch (const char * message)
+	{
+		printf("Error: %s", message);
+		printf("\nPress enter to exit...");
+		getchar();
+	}
+	
 	return 0;
+}
+
+void render()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
