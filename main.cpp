@@ -3,11 +3,14 @@
 
 #include "Window.h"
 #include "Shader.h"
+#include "Model.h"
 
 void render();
 
 int main()
 {
+	Model cube = { "thing.obj" };
+
 	try
 	{
 		Window window = { "DV1541 3D Project", 800, 600 };

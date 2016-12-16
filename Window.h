@@ -1,6 +1,7 @@
 #pragma once
 #include <glad\glad.h>
 #include <GLFW\glfw3.h>
+#include <map>
 
 
 class Window
@@ -8,9 +9,12 @@ class Window
 private:
 	static class CallbackHandler
 	{
+	private:
+		std::map<GLFWwindow*, Window*> windows;
+
 	public:
 		static void error(int error, const char * message);
-	
+
 		CallbackHandler();
 	} callbacks;
 
@@ -25,6 +29,8 @@ public:
 	void use();
 	bool isOpen();
 	void swapBuffers();
+
+	void keyEvent(int key, int action, int mods);
 
 	static void pollEvents();
 };

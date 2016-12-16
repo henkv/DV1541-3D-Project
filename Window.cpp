@@ -5,6 +5,7 @@ void Window::CallbackHandler::error(int error, const char * message)
 	throw message;
 }
 
+
 Window::CallbackHandler::CallbackHandler()
 {
 	static bool first = true;
@@ -63,6 +64,10 @@ bool Window::isOpen()
 void Window::swapBuffers()
 {
 	glfwSwapBuffers(window);
+}
+
+void Window::keyEvent(int key, int action, int mods)
+{
 }
 
 void Window::pollEvents()
