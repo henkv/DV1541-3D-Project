@@ -90,7 +90,7 @@ Model::Model(const char * objPath)
 	glVertexAttribPointer(0, 3, GL_FLOAT, FALSE, sizeof(Vertex), OFFSET(0));
 
 	glEnableVertexAttribArray(1); // normal
-	glVertexAttribPointer(0, 3, GL_FLOAT, TRUE, sizeof(Vertex), OFFSET(sizeof(vec3)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, FALSE, sizeof(Vertex), OFFSET(sizeof(vec3)));
 
 	glBindVertexArray(0);
 }

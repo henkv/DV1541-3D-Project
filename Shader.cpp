@@ -1,7 +1,8 @@
 #include "Shader.h"
 #include <fstream>
+#include <glm\gtc\type_ptr.hpp>
 
-
+GLuint Shader::activeProgram = GL_NONE;
 
 GLuint Shader::loadShader(GLenum shaderType, const GLchar * filePath)
 {
@@ -28,7 +29,6 @@ GLuint Shader::loadShader(GLenum shaderType, const GLchar * filePath)
 
 	return shader;
 }
-
 
 Shader::Shader(const char * vertexPath, 
 			   const char * fragmentPath)
@@ -66,4 +66,17 @@ Shader::~Shader()
 void Shader::use()
 {
 	glUseProgram(program);
+	activeProgram = program;
+}
+
+GLint Shader::getUniform(const GLchar * name)
+{
+	if (activeProgram != program)
+		throw "cant get uniform, shader not active";
+	return glGetUniformLocation(program, name);
+}
+
+void Shader::setUniform(const GLchar * name, const mat4 & matrix)
+{
+	glUniformMatrix4fv(getUniform(name), 1, GL_FALSE, value_ptr(matrix));
 }

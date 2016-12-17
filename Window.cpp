@@ -38,6 +38,7 @@ Window::Window(const char * title, size_t width, size_t height)
 	glfwMakeContextCurrent(window);
 	gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 	glfwSwapInterval(1);
+	glEnable(GL_DEPTH_TEST);
 
 	nrOfWindows++;
 }
