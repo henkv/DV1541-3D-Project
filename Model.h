@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <glad\glad.h>
 #include <glm\glm.hpp>
 using namespace std;
 using namespace glm;
@@ -12,11 +13,17 @@ private:
 		vec3 point;
 		vec3 normal;
 	};
-	std::vector<Vertex> vertices;
+
+	vector<Vertex> vertices;
+	GLuint vertexArray;
+	GLuint vertexBuffer;
 
 	void parseObj(const char * objPath);
+
 public:
 	Model(const char * objPath);
 	~Model();
+
+	void draw() const;
 };
 

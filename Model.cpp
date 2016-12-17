@@ -3,6 +3,7 @@
 #include <sstream>
 #include <string>
 
+#define OFFSET(x) ((GLvoid*)x)
 
 void Model::parseObj(const char * objPath)
 {
@@ -63,7 +64,7 @@ void Model::parseObj(const char * objPath)
 
 				getline(partStream, part, '/');
 				getline(partStream, part, '/');
-				vertex.normal = points.at(stoi(part) - 1);
+				vertex.normal = normals.at(stoi(part) - 1);
 
 				vertices.push_back(vertex);
 			}
@@ -77,8 +78,30 @@ void Model::parseObj(const char * objPath)
 Model::Model(const char * objPath)
 {
 	parseObj(objPath);
+
+	glGenVertexArrays(1, &vertexArray);
+	glGenBuffers(1, &vertexBuffer);
+
+	glBindVertexArray(vertexArray);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), &vertices[0], GL_STATIC_DRAW);
+
+	glEnableVertexAttribArray(0); // point
+	glVertexAttribPointer(0, 3, GL_FLOAT, FALSE, sizeof(Vertex), OFFSET(0));
+
+	glEnableVertexAttribArray(1); // normal
+	glVertexAttribPointer(0, 3, GL_FLOAT, TRUE, sizeof(Vertex), OFFSET(sizeof(vec3)));
+
+	glBindVertexArray(0);
 }
 
 Model::~Model()
 {
+}
+
+void Model::draw() const
+{
+	glBindVertexArray(vertexArray);
+	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
+	glBindVertexArray(0);
 }

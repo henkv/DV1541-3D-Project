@@ -5,23 +5,24 @@
 #include "Shader.h"
 #include "Model.h"
 
-void render();
+void render(const Model * model);
+
 
 int main()
 {
-	Model cube = { "thing.obj" };
 
 	try
 	{
 		Window window = { "DV1541 3D Project", 800, 600 };
 		Shader shader = { "VertexShader.glsl", "FragmentShader.glsl" };
+		Model cube = { "cube.obj" };
 
-
+		shader.use();
 		while (window.isOpen())
 		{
 			window.pollEvents();
 
-			render();
+			render(&cube);
 
 			window.swapBuffers();
 		}
@@ -36,7 +37,8 @@ int main()
 	return 0;
 }
 
-void render()
+void render(const Model * model)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	model->draw();
 }
