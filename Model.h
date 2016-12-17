@@ -1,24 +1,15 @@
 #pragma once
-#include <vector>
 #include <glad\glad.h>
-#include <glm\glm.hpp>
-using namespace std;
-using namespace glm;
+#include "Mesh.h"
 
 class Model
 {
 private:
-	struct Vertex
-	{
-		vec3 point;
-		vec3 normal;
-	};
+	Mesh mesh;
 
-	vector<Vertex> vertices;
 	GLuint vertexArray;
 	GLuint vertexBuffer;
-
-	void parseObj(const char * objPath);
+	GLsizei vertexArrayLength;	
 
 public:
 	Model(const char * objPath);
