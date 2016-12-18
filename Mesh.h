@@ -6,18 +6,21 @@ using namespace glm;
 
 class Mesh
 {
+public:
+	static const size_t VertexSize;
+	static const void * PositionOffset;
+	static const void * NormalOffset;
+	static const void * UVOffset;
+
 private:
 	struct Vertex
 	{
 		vec3 position;
 		vec3 normal;
+		vec2 uv;
 	};
 
 	vector<Vertex> vertices;
-public:
-	static const GLsizei VertexSize;
-	static const GLvoid * PositionOffset;
-	static const GLvoid * NormalOffset;
 
 public:
 	Mesh();
@@ -25,8 +28,8 @@ public:
 
 	void parseObj(const char * objPath);
 
-	GLsizeiptr bufferSize() const;
-	const GLvoid * bufferData() const;
-	GLsizei size() const;
+	const size_t size() const;
+	const size_t bufferSize() const;
+	const void * bufferData() const;
 };
 

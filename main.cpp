@@ -8,6 +8,7 @@
 
 void render(const Model * model);
 
+const mat4 I;
 const vec3 O = { 0, 0, 0 };
 const vec3 X = { 1, 0, 0 };
 const vec3 Y = { 0, 1, 0 };
@@ -18,8 +19,8 @@ int main()
 	try
 	{
 		Window window = { "DV1541 3D Project", 800, 600 };
-		Shader shader = { "VertexShader.glsl", "FragmentShader.glsl" };
-		Model cube = { "some.obj" };
+		Shader shader = { "shaders/VertexShader.glsl", "shaders/FragmentShader.glsl" };
+		Model manet = { "models/manet.obj" };
 
 		shader.use();
 		shader.setUniform("viewProj",
@@ -31,11 +32,14 @@ int main()
 		{
 			window.pollEvents();
 
-			shader.setUniform("world",
-				rotate(mat4(), (float)glfwGetTime(), Y)
+			shader.setUniform("world", 
+				rotate(
+					rotate(
+					rotate(I, (float)glfwGetTime(), Y),
+					(float)glfwGetTime(), Z), (float)glfwGetTime(), X)
 			);
 
-			render(&cube);
+			render(&manet);
 
 			window.swapBuffers();
 		}

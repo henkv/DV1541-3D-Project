@@ -3,9 +3,10 @@
 #include <sstream>
 #include <glad\glad.h>
 
-const GLsizei Mesh::VertexSize = sizeof(Mesh::Vertex);
-const GLvoid * Mesh::PositionOffset = (GLvoid*)0;
-const GLvoid * Mesh::NormalOffset = (GLvoid*)sizeof(vec3);
+const size_t Mesh::VertexSize = sizeof(Vertex);
+const void * Mesh::PositionOffset = (void *)offsetof(Vertex, position);
+const void * Mesh::NormalOffset   = (void *)offsetof(Vertex, normal);
+const void * Mesh::UVOffset		  = (void *)offsetof(Vertex, uv);
 
 void Mesh::parseObj(const char * objPath)
 {
@@ -84,21 +85,20 @@ void Mesh::parseObj(const char * objPath)
 	vertices.shrink_to_fit();
 }
 
-GLsizeiptr Mesh::bufferSize() const
-{
-	return sizeof(Vertex) * vertices.size();
-}
-
-const GLvoid * Mesh::bufferData() const
-{
-	return &vertices[0];
-}
-
-GLsizei Mesh::size() const
+const size_t Mesh::size() const
 {
 	return vertices.size();
 }
 
+const size_t Mesh::bufferSize() const
+{
+	return sizeof(Vertex) * vertices.size();
+}
+
+const void * Mesh::bufferData() const
+{
+	return &vertices[0];
+}
 
 Mesh::Mesh()
 {
