@@ -19,7 +19,7 @@ int main()
 	try
 	{
 		Window window = { "DV1541 3D Project", 800, 600 };
-		Shader shader = { "shaders/VertexShader.glsl", "shaders/FragmentShader.glsl" };
+		Shader shader = { "shaders/VertexShader.glsl", "shaders/GeometryShader.glsl", "shaders/FragmentShader.glsl" };
 		Model manet = { "models/manet.obj" };
 
 		shader.use();
