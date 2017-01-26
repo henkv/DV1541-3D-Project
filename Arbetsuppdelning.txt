@@ -8,6 +8,14 @@
 Henrik
 	o Deferred Rendering
 	o Parsing and rendering an existing model format
-	o Displacement mapping using Tessellation hardwareHannah	o Normal mapping
+	o Displacement mapping using Tessellation hardware
+
+Hannah
+	o Normal mapping
 	o Back face culling using Geometry Shader
-	o Glow-effectWalter	o Shadow mapping	o View frustum culling against a quadtree	o Gaussian filter
+	o Glow-effect
+
+Walter
+	o Shadow mapping
+	o View frustum culling against a quadtree
+	o Gaussian filter

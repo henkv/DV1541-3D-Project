@@ -69,6 +69,11 @@ void Window::swapBuffers()
 	glfwSwapBuffers(window);
 }
 
+double Window::getTime()
+{
+	return glfwGetTime();
+}
+
 void Window::keyEvent(int key, int action, int mods)
 {
 }
