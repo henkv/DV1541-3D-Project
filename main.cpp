@@ -6,6 +6,8 @@
 #include "Shader.h"
 #include "Model.h"
 
+int main();
+
 void render(const Model * model);
 
 const mat4 I;
@@ -16,6 +18,9 @@ const vec3 Z = { 0, 0, 1 };
 
 int main()
 {
+	vec3 cameraPosition = vec3(0, 0, -10);
+	vec3 cameraCenter = O;
+
 	try
 	{
 		Window window = { "DV1541 3D Project", 800, 600 };
@@ -30,7 +35,7 @@ int main()
 		while (window.isOpen())
 		{
 			window.pollEvents();
-			shader.setUniform("globalTime", (float)glfwGetTime());
+			shader.setUniform("globalTime", Window::getTime());
 			shader.setUniform("world", 
 				rotate(
 					rotate(
