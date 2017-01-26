@@ -1,6 +1,6 @@
 #version 440 core
 
-layout (triangle) in;
+layout (triangles) in;
 layout (triangle_strip, max_vertices = 3) out;
 
 layout(location = 0) in vec3 position[];
@@ -16,37 +16,24 @@ layout(location = 4) uniform vec3 viewPoint;
 layout(location = 0) out vec3 fragment_position;
 layout(location = 1) out vec3 fragment_normal;
 
-
-
-vec3 getTriangleNormal(vec3 p0, vec3 p1, vec3 p2)
-{
-  vec3 normal;
-
-  vec3 U = p1 - p0;
-  vec3 V = p2 - p0;
-
-  normal = cross(U,V);
-
-  return normalize(normal);
-}
-
 void main()
 {
-	vec3 normal = getTriangleNormal(position[0], position[1], position[2]);
+	vec3 vt = normalize(viewPoint - position[0]);
 
-	vec3 transformed_normal = (vec4(normal, 0.0f) * world).xyz;
-	vec3 vt = normalize (position[0].gl_Position.xyz - viewPoint);
+	float d = dot(vt, normal[0]);
 
-	float d = dot(vt, normal);
-
-	if (normal > 0)
+	if (d > 0)
 	{
-		fragment_position = normal;
-
-		EmitVertex();
+		for (int i = 0; i < 3; i++)
+		{
+			gl_Position = projection * view * vec4(position[i], 1);
+			fragment_position = position[i];
+			fragment_normal = normal[i];
+			EmitVertex();
+		}
 	}
-
+		
+	
 	EndPrimitive();
 
-	return 0;
 }

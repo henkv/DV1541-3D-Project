@@ -12,7 +12,7 @@ Henrik
 
 Hannah
 	o Normal mapping
-	o Back face culling using Geometry Shader
+OK	o Back face culling using Geometry Shader
 	o Glow-effect
 
 Walter
