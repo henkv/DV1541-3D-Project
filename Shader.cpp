@@ -107,6 +107,21 @@ GLint Shader::getUniform(const GLchar * name)
 	return glGetUniformLocation(program, name);
 }
 
+void Shader::setUniform(const GLchar * name, const float & value)
+{
+	glUniform1f(getUniform(name), value);
+}
+
+void Shader::setUniform(const GLchar * name, const vec2 & vector)
+{
+	glUniform2fv(getUniform(name), 1, value_ptr(vector));
+}
+
+void Shader::setUniform(const GLchar * name, const vec3 & vector)
+{
+	glUniform3fv(getUniform(name), 1, value_ptr(vector));
+}
+
 void Shader::setUniform(const GLchar * name, const mat4 & matrix)
 {
 	glUniformMatrix4fv(getUniform(name), 1, GL_FALSE, value_ptr(matrix));
