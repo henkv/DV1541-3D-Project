@@ -6,8 +6,9 @@ layout(location = 0) out vec3 position;
 layout(location = 1) out vec3 normal;
 
 layout(location = 0) uniform mat4 world;
-layout(location = 1) uniform mat4 viewProj;
-layout(location = 2) uniform float globalTime;
+layout(location = 1) uniform mat4 view;
+layout(location = 2) uniform mat4 projection;
+layout(location = 3) uniform float globalTime;
 
 void main()
 {

@@ -19,14 +19,13 @@ int main()
 	try
 	{
 		Window window = { "DV1541 3D Project", 800, 600 };
-		Shader shader = { "shaders/VertexShader.glsl", "shaders/GeometryShader.glsl", "shaders/FragmentShader.glsl" };
+		Shader shader = { "shaders/VertexShader.glsl", "shaders/BackfaceCulling.glsl", "shaders/FragmentShader.glsl" };
 		Model manet = { "models/manet.obj" };
 
 		shader.use();
-		shader.setUniform("viewProj",
-			perspective(pi<float>() * 0.2f, 8.f / 6.f, 0.1f, 100.f) *
-			lookAt(vec3(0, 0, -10), O, Y)
-		);
+		shader.setUniform("view", lookAt(vec3(0, 0, -10), O, Y));
+		shader.setUniform("projection", perspective(pi<float>() * 0.2f, 8.f / 6.f, 0.1f, 100.f));
+		shader.setUniform("viewPoint", vec3(0, 0, -10));
 
 		while (window.isOpen())
 		{
