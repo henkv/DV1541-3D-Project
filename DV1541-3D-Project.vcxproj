@@ -177,8 +177,8 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="GeometryShader.glsl" />
     <None Include="shaders\FragmentShader.glsl" />
+    <None Include="shaders\GeometryShader.glsl" />
     <None Include="shaders\VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>

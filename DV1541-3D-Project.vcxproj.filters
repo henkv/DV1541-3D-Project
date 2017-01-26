@@ -70,7 +70,7 @@
     <None Include="shaders\VertexShader.glsl">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="GeometryShader.glsl">
+    <None Include="shaders\GeometryShader.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
