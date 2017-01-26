@@ -14,7 +14,6 @@ private:
 
 	public:
 		static void error(int error, const char * message);
-
 		CallbackHandler();
 	} callbacks;
 
@@ -33,5 +32,6 @@ public:
 	void keyEvent(int key, int action, int mods);
 
 	static void pollEvents();
+	static double getTime();
 };
 

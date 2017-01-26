@@ -15,5 +15,5 @@ void main()
   position = vec3(world * vec4(vertex_position, 1.0f));
   normal = normalize(vec3(world * vec4(vertex_normal, 0.0f)));
 
-  gl_Position = viewProj * vec4(position, 1.0f);
+  gl_Position = viewProj * vec4(position, 1.0f) ;
 }
