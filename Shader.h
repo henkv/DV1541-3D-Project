@@ -12,11 +12,8 @@ private:
 
 	GLuint loadShader(GLenum shaderType, const GLchar * filePath);
 public:
-	Shader(const char * vertexPath, 
-		   const char * fragmentPath);
-	Shader(const char * vertexPath,
-		   const char * geometryPath,
-		   const char * fragmentPath);
+	Shader(const char * vertexPath, const char * fragmentPath);
+	Shader(const char * vertexPath, const char * geometryPath, const char * fragmentPath);
 	~Shader();
 
 	void use();
