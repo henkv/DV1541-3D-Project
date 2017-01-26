@@ -58,6 +58,37 @@ Shader::Shader(const char * vertexPath,
 	}
 }
 
+Shader::Shader(const char * vertexPath, const char * geometryPath, const char * fragmentPath)
+{
+	GLuint vertexShader = loadShader(GL_VERTEX_SHADER, vertexPath);
+	GLuint geometryShader = loadShader(GL_GEOMETRY_SHADER, geometryPath);
+	GLuint fragmentShader = loadShader(GL_FRAGMENT_SHADER, fragmentPath);
+
+	program = glCreateProgram();
+	glAttachShader(program, vertexShader);
+	glAttachShader(program, geometryShader);
+	glAttachShader(program, fragmentShader);
+
+	glLinkProgram(program);
+
+	glDetachShader(program, vertexShader);
+	glDetachShader(program, geometryShader);
+	glDetachShader(program, fragmentShader);
+
+	glDeleteShader(vertexShader);
+	glDeleteShader(geometryShader);
+	glDeleteShader(fragmentShader);
+
+	GLint success = 0;
+	glGetProgramiv(program, GL_LINK_STATUS, &success);
+	if (success == GL_FALSE)
+	{
+		GLchar programLog[512] = { NULL };
+		glGetProgramInfoLog(program, 512, NULL, programLog);
+		throw programLog;
+	}
+}
+
 Shader::~Shader()
 {
 	glDeleteProgram(program);

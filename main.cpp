@@ -18,6 +18,9 @@ int main()
 {
 	try
 	{
+		gladLoadGL();
+		throw glGetString(GL_VERSION);
+
 		Window window = { "DV1541 3D Project", 800, 600 };
 		Shader shader = { "shaders/VertexShader.glsl", "shaders/FragmentShader.glsl" };
 		Model manet = { "models/manet.obj" };
@@ -31,7 +34,7 @@ int main()
 		while (window.isOpen())
 		{
 			window.pollEvents();
-
+			shader.setUniform("globalTime", (float)glfwGetTime());
 			shader.setUniform("world", 
 				rotate(
 					rotate(
