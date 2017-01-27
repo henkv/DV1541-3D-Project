@@ -178,7 +178,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\FragmentShader.glsl" />
-    <None Include="shaders\BackfaceCulling.glsl" />
+    <None Include="shaders\GeometryShader.glsl" />
     <None Include="shaders\VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>
