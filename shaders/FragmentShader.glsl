@@ -6,8 +6,6 @@ layout(location = 3) uniform vec3 viewPosition;
 
 out vec4 fragment_color;
 	
-
-
 vec3 ambient_light = vec3(0.f, 0.f, 0.f);
 vec3 light_position = vec3(0.f, 0.f, -100.f);
 vec3 light_color = vec3(1.f, 1.f, 1.f);
