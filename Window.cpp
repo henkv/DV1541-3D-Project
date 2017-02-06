@@ -1,8 +1,26 @@
 #include "Window.h"
+#include <stdio.h>
 
 void Window::CallbackHandler::error(int error, const char * message)
 {
 	throw message;
+}
+
+void Window::CallbackHandler::key(GLFWwindow * window, int key, int scancode, int action, int mods)
+{
+	
+}
+
+void Window::CallbackHandler::subscribe(GLFWwindow * window, Window * windowObj)
+{
+	//windows.insert(std::make_pair(window, windowObj));
+	glfwSetKeyCallback(window, key);
+}
+
+void Window::CallbackHandler::unsubscribe(GLFWwindow * window)
+{
+	//windows.erase(windows.find(window));
+	glfwSetKeyCallback(window, NULL);
 }
 
 
@@ -13,17 +31,17 @@ Window::CallbackHandler::CallbackHandler()
 	{
 		glfwSetErrorCallback(error);
 		first = false;
+		windows = {};
 	}
 }
 
 
+Window::CallbackHandler Window::callbacks = {};
 int Window::nrOfWindows = 0;
 
 
 Window::Window(const char * title, size_t width, size_t height)
 {
-	
-
 	if (nrOfWindows == 0 && !glfwInit())
 		throw "failed to init glfw";
 	
@@ -43,12 +61,14 @@ Window::Window(const char * title, size_t width, size_t height)
 	glEnable(GL_DEPTH_TEST);
 
 	nrOfWindows++;
+	callbacks.subscribe(window, this);
 }
 
 Window::~Window()
 {
 	glfwDestroyWindow(window);
 	nrOfWindows--;
+	callbacks.unsubscribe(window);
 
 	if (nrOfWindows == 0)
 		glfwTerminate();
@@ -64,6 +84,11 @@ bool Window::isOpen()
 	return !glfwWindowShouldClose(window);
 }
 
+bool Window::getKey(int key)
+{
+	return glfwGetKey(window, key);
+}
+
 void Window::swapBuffers()
 {
 	glfwSwapBuffers(window);
@@ -72,10 +97,6 @@ void Window::swapBuffers()
 double Window::getTime()
 {
 	return glfwGetTime();
-}
-
-void Window::keyEvent(int key, int action, int mods)
-{
 }
 
 void Window::pollEvents()
