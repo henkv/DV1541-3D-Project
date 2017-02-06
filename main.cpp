@@ -35,8 +35,19 @@ int main()
 		lightManager.add(LightManager::Light( vec3( 10, -10, -10), vec3(.75, 1, 0) ));
 		lightManager.add(LightManager::Light( vec3(  0, 10,   0), vec3(1, 1, 1) ));
 
+		Window window = { "DV1541 3D Project", 800, 600 };
+		Shader shader = { "shaders/VertexShader.glsl", "shaders/BackfaceCulling.glsl", "shaders/FragmentShader.glsl" };
+		Shader glowShader = { "shaders/VertexShader.glsl", "shader/brightnessFragmentShader.glsl" };
 		Model manet = { "models/manet.obj" };
 
+		GLboolean horizontal = true, firstIteration = true;
+		GLuint amount = 10; //5 horizontal, 5 vertical 
+
+
+		shader.use();
+		shader.setUniform("view", lookAt(vec3(0, 0, -10), O, Y));
+		shader.setUniform("projection", perspective(pi<float>() * 0.2f, 8.f / 6.f, 0.1f, 100.f));
+		shader.setUniform("viewPoint", vec3(0, 0, -10));
 		objectManager.add(&manet);
 
 
@@ -46,6 +57,17 @@ int main()
 			thisFrame = window.getTime();
 			deltaTime = thisFrame - lastFrame;
 			window.pollEvents();
+			shader.use();
+			shader.setUniform("globalTime", (float)glfwGetTime());
+			shader.setUniform("world", 
+				rotate(
+					rotate(
+					rotate(I, (float)glfwGetTime(), Y),
+					(float)glfwGetTime(), Z), (float)glfwGetTime(), X)
+			);
+			render(&manet);
+
+			//glow
 
 
 			camera.update(deltaTime);
