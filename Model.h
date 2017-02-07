@@ -4,7 +4,7 @@
 #include "Mesh.h"
 #include "GameObject.h"
 
-class Model : GameObject
+class Model : public GameObject
 {
 private:
 	Mesh mesh;

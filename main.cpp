@@ -25,9 +25,11 @@ int main()
 
 		GBuffer gBuffer = DefferedRenderingSetup();
 		GameObjectManager objectManager;
+		objectManager.add(&manet);
 
 
 		double lastFrame = window.getTime();
+		double thisFrame = window.getTime();
 		while (window.isOpen())
 		{
 			window.pollEvents();
@@ -36,7 +38,6 @@ int main()
 			LightningPass(gBuffer, lightningPassShader, lightManager, camera);
 
 			window.swapBuffers();
-			lastFrame = window.getTime();
 		}
 	}
 	catch (const char * message)
