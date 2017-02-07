@@ -1,3 +1,4 @@
+#include "main.h"
 #include <stdio.h>
 #include <glad\glad.h>
 #include <glm\gtc\matrix_transform.hpp>
@@ -5,56 +6,37 @@
 #include "Window.h"
 #include "Shader.h"
 #include "Model.h"
+#include "Camera.h"
+#include "GameObjectManager.h"
 
-int main();
-
-void render(const Model * model);
-void update(double deltaTime);
-
-const mat4 I;
-const vec3 O = { 0, 0, 0 };
-const vec3 X = { 1, 0, 0 };
-const vec3 Y = { 0, 1, 0 };
-const vec3 Z = { 0, 0, 1 };
-
-Window window = { "DV1541 3D Project", 800, 600 };
-
-struct {
-	vec3 position = { 0, 0, -10 };
-	vec3 direction = { 0, 0, 1 };
-} camera;
+const int WINDOW_WIDTH = 800;
+const int WINDOW_HEIGHT = 600;
 
 int main()
 {
+
 	try
 	{
-		Shader shader = { "shaders/VertexShader.glsl", "shaders/FragmentShader.glsl" };
+		Window window = { "DV1541 3D Project", 800, 600 };
+		Camera camera = { vec3(0,0,-10), vec3(0,0,1), vec3(0,1,0) };
+		Shader geometryPassShader("shaders/GeometryPass-Vertex.glsl", "shaders/GemetryPass-Fragment.glsl");
+		Shader lightningPassShader("shaders/LightningPass-Vertex.glsl", "shaders/LightningPass-Fragment.glsl");
 		Model manet = { "models/manet.obj" };
 
-		shader.use();
-		shader.setUniform("view", lookAt(camera.position, camera.position + camera.direction, Y));
-		shader.setUniform("projection", perspective(pi<float>() * 0.2f, 8.f / 6.f, 0.1f, 100.f));
-		shader.setUniform("viewPoint", camera.position);
+		GBuffer gBuffer = DefferedRenderingSetup();
+		GameObjectManager objectManager;
+
 
 		double lastFrame = window.getTime();
 		while (window.isOpen())
 		{
 			window.pollEvents();
-			update(window.getTime() - lastFrame);
-			lastFrame = window.getTime();
 
-			shader.setUniform("view", lookAt(camera.position, camera.position + camera.direction, Y));
-			shader.setUniform("globalTime", Window::getTime());
-			shader.setUniform("world", 
-				rotate(
-					rotate(
-					rotate(I, (float)glfwGetTime(), Y),
-					(float)glfwGetTime(), Z), (float)glfwGetTime(), X)
-			);
-
-			render(&manet);
+			GeometryPass(gBuffer.gBuffer, geometryPassShader, objectManager, camera);
+			LightningPass(gBuffer, lightningPassShader, lightManager, camera);
 
 			window.swapBuffers();
+			lastFrame = window.getTime();
 		}
 	}
 	catch (const char * message)
@@ -67,35 +49,70 @@ int main()
 	return 0;
 }
 
-void update(double deltaTime)
+
+GBuffer DefferedRenderingSetup()
 {
-	bool W = window.getKey(GLFW_KEY_W);
-	bool S = window.getKey(GLFW_KEY_S);
-	bool A = window.getKey(GLFW_KEY_A);
-	bool D = window.getKey(GLFW_KEY_D);
-	
-	if (W)
-	{
-		camera.position.z += deltaTime ;
-	}
-	else if (S)
-	{
-		camera.position.z -= deltaTime;
-	}
+	GLuint gBuffer, gPosition, gNormal, gColorSpec;
 
-	if (A && !D)
-	{
-		camera.position.x += deltaTime;
-	}
+	glGenFramebuffers(1, &gBuffer);
+	glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
 
-	if (D && !A)
-	{
-		camera.position.x -= deltaTime;
-	}
+	// - Position Color Buffer
+	glGenTextures(1, &gPosition);
+	glBindTexture(GL_TEXTURE_2D, gPosition);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_RGB, GL_FLOAT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, gPosition, 0);
+
+	// - Normal Color Buffer
+	glGenTextures(1, &gNormal);
+	glBindTexture(GL_TEXTURE_2D, gNormal);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_RGB, GL_FLOAT, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, gNormal, 0);
+
+	// - Color + Specular Color Buffer
+	glGenTextures(1, &gColorSpec);
+	glBindTexture(GL_TEXTURE_2D, gColorSpec);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, WINDOW_WIDTH, WINDOW_HEIGHT, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, gColorSpec, 0);
+
+	// - Tell OpenGL which color attachemnts to use for this framebuffer
+	GLuint attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
+	glDrawBuffers(3, attachments);
+
+	return { gBuffer, gPosition, gNormal, gColorSpec };
 }
 
-void render(const Model * model)
+void GeometryPass(GLuint gBuffer, Shader & shader, GameObjectManager& objectManager, Camera & camera)
 {
+	glBindFramebuffer(GL_FRAMEBUFFER, gBuffer);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	model->draw();
+
+	shader.use();
+	shader.setUniform("viewMatrix", camera.getViewMatrix());
+	shader.setUniform("projectionMatrix", camera.getProjectionMatrix());
+
+	objectManager.draw(shader);
+}
+
+void LightningPass(GBuffer gBuffer, Shader& shader, LightManager & lights, Camera & camera)
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glClear(GL_COLOR_BUFFER_BIT);
+	shader.use();
+	
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, gBuffer.gPosition);
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, gBuffer.gNormal);
+	glActiveTexture(GL_TEXTURE2);
+	glBindTexture(GL_TEXTURE_2D, gBuffer.gColorSpec);
+
+	lights.sendTo(shader);
+	shader.setUniform("viewPosition", camera.getPosition());
 }

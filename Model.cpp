@@ -3,9 +3,6 @@
 #include <sstream>
 #include <string>
 
-#define OFFSET(x) ((GLvoid*)x)
-
-
 
 Model::Model(const char * objPath)
 {
@@ -32,9 +29,25 @@ Model::~Model()
 {
 }
 
-void Model::draw() const
+void Model::move(vec3 delta)
 {
+	position += delta;
+	worldMatrix = translate(worldMatrix, delta);
+}
+
+void Model::setPosition(vec3 position)
+{
+	this->position = position;
+	worldMatrix = translate(mat4(), position);
+}
+
+void Model::draw(Shader & shader)
+{
+	shader.setUniform("worldMatrix", worldMatrix);
 	glBindVertexArray(vertexArray);
 	glDrawArrays(GL_TRIANGLES, 0, vertexArrayLength);
-	glBindVertexArray(0);
+}
+
+void Model::update(float delta)
+{
 }
