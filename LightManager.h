@@ -16,7 +16,7 @@ public:
 	void add(Light * light);
 
 	// Inherited via GameObject
-	virtual void draw(Shader & shader) override;
+	virtual void draw() override;
 	virtual void update(float delta) override;
 };
 

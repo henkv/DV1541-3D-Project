@@ -42,12 +42,13 @@ void Model::setPosition(vec3 position)
 	worldMatrix = translate(mat4(), position);
 }
 
-void Model::draw(Shader & shader)
+void Model::draw()
 {
-	shader.setUniform("worldMatrix", worldMatrix);
+	Shader::setUniform("worldMatrix", worldMatrix);
 	glBindVertexArray(vertexArray);
 	glDrawArrays(GL_TRIANGLES, 0, vertexArrayLength);
 }
+
 
 void Model::update(float delta)
 {

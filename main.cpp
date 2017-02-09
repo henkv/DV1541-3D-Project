@@ -133,8 +133,8 @@ void GeometryPass(GLuint gBuffer, Shader & shader, GameObjectManager& objectMana
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	shader.use();
-	shader.setUniform("viewMatrix", camera.getViewMatrix());
-	shader.setUniform("projectionMatrix", camera.getProjectionMatrix());
+	Shader::setUniform("viewMatrix", camera.getViewMatrix());
+	Shader::setUniform("projectionMatrix", camera.getProjectionMatrix());
 
 	objectManager.draw(shader);
 }

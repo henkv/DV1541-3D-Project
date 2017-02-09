@@ -24,7 +24,7 @@ public:
 	void setPosition(vec3 position);
 
 	// Inherited via GameObject
-	virtual void draw(Shader & shader) override;
+	virtual void draw() override;
 	virtual void update(float delta) override;
 };
 

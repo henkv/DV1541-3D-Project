@@ -29,10 +29,10 @@ void GameObjectManager::update(float delta)
 	}
 }
 
-void GameObjectManager::draw(Shader & shader)
+void GameObjectManager::draw()
 {
 	for (auto &object : objects)
 	{
-		object.second->draw(shader);
+		object.second->draw();
 	}
 }
