@@ -103,12 +103,9 @@ void Shader::use()
 
 GLint Shader::getUniform(const GLchar * name)
 {
-	GLint location = glGetUniformLocation(activeProgram, name);
-
-	if (location < 0)
-		throw "cant find uniform";
-
-	return location;
+	if (activeProgram != program)
+		throw "cant get uniform, shader not active";
+	return glGetUniformLocation(program, name);
 }
 
 void Shader::setUniform(const GLchar * name, const float & value)
@@ -126,7 +123,7 @@ void Shader::setUniform(const GLchar * name, const vec3 & vector)
 	glUniform3fv(getUniform(name), 1, value_ptr(vector));
 }
 
-void Shader::setUniform(const GLchar * name, const mat4 & matrix, GLboolean normalize)
+void Shader::setUniform(const GLchar * name, const mat4 & matrix)
 {
-	glUniformMatrix4fv(getUniform(name), 1, normalize, value_ptr(matrix));
+	glUniformMatrix4fv(getUniform(name), 1, GL_FALSE, value_ptr(matrix));
 }
