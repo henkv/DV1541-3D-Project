@@ -1,4 +1,4 @@
-#include "main.h"
+
 #include <stdio.h>
 #include <glad\glad.h>
 #include <glm\gtc\matrix_transform.hpp>
@@ -8,36 +8,58 @@
 #include "Model.h"
 #include "Camera.h"
 #include "GameObjectManager.h"
+#include "LightManager.h"
+#include "FullscreenQuad.h"
 
-const int WINDOW_WIDTH = 800;
-const int WINDOW_HEIGHT = 600;
+const size_t WINDOW_WIDTH = 800;
+const size_t WINDOW_HEIGHT = 600;
+
+struct GBuffer
+{
+	GLuint gBuffer, gPosition, gNormal, gColorSpec;
+};
+int main();
+GBuffer DefferedRenderingSetup();
+void GeometryPass(GLuint gBuffer, Shader & geometryPassShader, GameObjectManager & objectManager, Camera & camera);
+void LightningPass(GBuffer gBuffer, Shader & shader, LightManager & lights, Camera & camera, FullscreenQuad & quad);
+
 
 int main()
 {
 
 	try
 	{
-		Window window = { "DV1541 3D Project", 800, 600 };
-		Camera camera = { vec3(0,0,-10), vec3(0,0,1), vec3(0,1,0) };
-		Shader geometryPassShader("shaders/GeometryPass-Vertex.glsl", "shaders/GemetryPass-Fragment.glsl");
-		Shader lightningPassShader("shaders/LightningPass-Vertex.glsl", "shaders/LightningPass-Fragment.glsl");
-		Model manet = { "models/manet.obj" };
+		Window window = { "DV1541 3D Project", WINDOW_WIDTH, WINDOW_HEIGHT };
+		Camera camera = { {0,0,-10}, {0,0,1}, {0,1,0} };
+		FullscreenQuad quad;
+
+		Shader phongShader("shaders/Phong-Vertex.glsl", "shaders/Phong-Fragment.glsl");
+		Shader geometryPassShader("shaders/GeometryPass-Vertex.glsl", "shaders/GeometryPass-Fragment.glsl");
+		Shader lightPassShader("shaders/LightPass-Vertex.glsl", "shaders/LightPass-Fragment.glsl");
 
 		GBuffer gBuffer = DefferedRenderingSetup();
 		GameObjectManager objectManager;
+		LightManager lightManager;
+
+		Model manet = { "models/manet.obj" };
+
 		objectManager.add(&manet);
 
 
-		double lastFrame = window.getTime();
-		double thisFrame = window.getTime();
+		double thisFrame = 0, lastFrame = 0;
 		while (window.isOpen())
 		{
+			thisFrame = window.getTime();
 			window.pollEvents();
 
-			GeometryPass(gBuffer.gBuffer, geometryPassShader, objectManager, camera);
-			LightningPass(gBuffer, lightningPassShader, lightManager, camera);
 
-			window.swapBuffers();
+			GeometryPass(gBuffer.gBuffer, geometryPassShader, objectManager, camera);
+			LightningPass(gBuffer, lightPassShader, lightManager, camera, quad);
+
+
+			window.swapBuffer();
+			window.clearBuffer();
+			lastFrame = thisFrame;
 		}
 	}
 	catch (const char * message)
@@ -86,6 +108,22 @@ GBuffer DefferedRenderingSetup()
 	GLuint attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
 	glDrawBuffers(3, attachments);
 
+	// - Create and attach depth buffer
+	GLuint rboDepth;
+	glGenRenderbuffers(1, &rboDepth);
+	glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, WINDOW_WIDTH, WINDOW_HEIGHT);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
+
+	// - Check if framebuffer is complete
+	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+	{
+		throw "Framebuffer incomplete";
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+
 	return { gBuffer, gPosition, gNormal, gColorSpec };
 }
 
@@ -101,7 +139,7 @@ void GeometryPass(GLuint gBuffer, Shader & shader, GameObjectManager& objectMana
 	objectManager.draw(shader);
 }
 
-void LightningPass(GBuffer gBuffer, Shader& shader, LightManager & lights, Camera & camera)
+void LightningPass(GBuffer gBuffer, Shader& shader, LightManager & lights, Camera & camera, FullscreenQuad & quad)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -109,11 +147,17 @@ void LightningPass(GBuffer gBuffer, Shader& shader, LightManager & lights, Camer
 	
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, gBuffer.gPosition);
+	glUniform1i(0, 0);
+
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, gBuffer.gNormal);
+	glUniform1i(1, 1);
+
 	glActiveTexture(GL_TEXTURE2);
 	glBindTexture(GL_TEXTURE_2D, gBuffer.gColorSpec);
+	glUniform1i(2, 2);
 
-	lights.sendTo(shader);
+	//lights.sendTo(shader);
 	shader.setUniform("viewPosition", camera.getPosition());
+	quad.draw(shader);
 }

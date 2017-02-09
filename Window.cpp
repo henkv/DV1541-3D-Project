@@ -79,6 +79,11 @@ void Window::use()
 	glfwMakeContextCurrent(window);
 }
 
+void Window::clearBuffer()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
 bool Window::isOpen()
 {
 	return !glfwWindowShouldClose(window);
@@ -89,7 +94,7 @@ bool Window::getKey(int key)
 	return glfwGetKey(window, key);
 }
 
-void Window::swapBuffers()
+void Window::swapBuffer()
 {
 	glfwSwapBuffers(window);
 }

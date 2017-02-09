@@ -23,6 +23,7 @@ Model::Model(const char * objPath)
 	glVertexAttribPointer(1, 3, GL_FLOAT, GL_TRUE, Mesh::VertexSize, Mesh::NormalOffset);
 
 	glBindVertexArray(0);
+
 }
 
 Model::~Model()

@@ -13,7 +13,7 @@ GameObjectManager::~GameObjectManager()
 
 void GameObjectManager::add(GameObject* object)
 {
-	objects.insert(map_t::value_type(object->UID, object))
+	objects.insert(map_t::value_type(object->UID, object));
 }
 
 void GameObjectManager::remove(uid_t objectId)

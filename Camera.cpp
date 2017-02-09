@@ -2,16 +2,12 @@
 
 
 
-Camera::Camera()
-{
-}
-
-
 Camera::Camera(vec3 position, vec3 direction, vec3 up)
 {
-	this->up = up;
 	this->position = position;
 	this->direction = direction;
+	this->up = up;
+
 	viewMatrix = lookAt(position, position + direction, up);
 	projectionMatrix = perspective(pi<float>() * 0.2f, 8.f / 6.f, 0.1f, 100.f);
 }

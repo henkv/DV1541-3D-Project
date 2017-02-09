@@ -29,7 +29,8 @@ public:
 	~Window();
 
 	void use();
-	void swapBuffers();
+	void clearBuffer();
+	void swapBuffer();
 
 	bool isOpen();
 	bool getKey(int key);

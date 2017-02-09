@@ -30,7 +30,8 @@ GLuint Shader::loadShader(GLenum shaderType, const GLchar * filePath)
 	return shader;
 }
 
-Shader::Shader(const char * vertexPath, 
+
+Shader::Shader(const char * vertexPath,
 			   const char * fragmentPath)
 {
 	GLuint vertexShader = loadShader(GL_VERTEX_SHADER, vertexPath);

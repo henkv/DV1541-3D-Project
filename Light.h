@@ -8,8 +8,8 @@ using namespace glm;
 class Light : public GameObject
 {
 private:
-	vec3 color;
 	vec3 position;
+	vec3 color;
 
 public:
 	Light(vec3 position, vec3 color);
