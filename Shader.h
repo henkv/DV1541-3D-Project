@@ -20,6 +20,7 @@ public:
 	GLint getUniform(const GLchar * name);
 	void setUniform(const GLchar * name, const int & value);
 	void setUniform(const GLchar * name, const float & value);
+	
 	void setUniform(const GLchar * name, const vec2 & vector);
 	void setUniform(const GLchar * name, const vec3 & vector);
 	void setUniform(const GLchar * name, const mat4 & matrix);
