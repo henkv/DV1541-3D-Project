@@ -6,11 +6,11 @@ in vec2 TexCoords;
 uniform sampler2D scene;
 uniform sampler2D bloomBlur;
 uniform bool bloom;
-uniform floar exposure;
+uniform float exposure;
 
 void main()
 {
-	cont float gamma = 2.2;
+	const float gamma = 2.2;
 	vec3 hdrColor = texture(scene, TexCoords).rgb;
 	vec3 bloomColor = texture(bloomBlur, TexCoords).rgb;
 	if(bloom)

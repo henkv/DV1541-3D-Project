@@ -52,8 +52,8 @@ int main()
 
 		//Samplers
 		shaderBloomFin.use();
-		shaderBloopFin.setUniform("scene", 0);
-		shaderBloopFin.setUniform("bloomBlur", 1);
+		shaderBloomFin.setUniform("scene", 0);
+		shaderBloomFin.setUniform("bloomBlur", 1);
 
 
 		//glowbuffer
@@ -153,7 +153,7 @@ int main()
 			for (int i = 0; i < amount; i++)
 			{
 				glBindFramebuffer (GL_FRAMEBUFFER, blurFBO[horizontal]);
-				glUniform1i(blurShader.getUniform("horizontal"), horizontal);
+				blurShader.setUniform("horizontal", horizontal);
 				glBindTexture(GL_TEXTURE_2D, first_iteration ? colorBuffers[1] : blurColorbuffers[!horizontal]);
 				render(&manet);
 				horizontal = !horizontal;
@@ -171,8 +171,8 @@ int main()
 			glBindTexture(GL_TEXTURE_2D, colorBuffers[0]);
 			glActiveTexture(GL_TEXTURE1);
 			glBindTexture(GL_TEXTURE_2D, blurColorbuffers[!horizontal]);
-			glUniform1i(shaderBloomFin.getUniform("bloom"), bloom);
-			glUniform1i(shaderBloomFin.getUniform("exposure"), exposure);
+			shaderBloomFin.setUniform("bloom", bloom);
+			shaderBloomFin.setUniform("exposure", exposure);
 			render(&manet);
 
 			
