@@ -37,12 +37,84 @@ int main()
 
 		Window window = { "DV1541 3D Project", 800, 600 };
 		Shader shader = { "shaders/VertexShader.glsl", "shaders/BackfaceCulling.glsl", "shaders/FragmentShader.glsl" };
-		Shader glowShader = { "shaders/VertexShader.glsl", "shader/brightnessFragmentShader.glsl" };
 		Model manet = { "models/manet.obj" };
 
-		GLboolean horizontal = true, firstIteration = true;
-		GLuint amount = 10; //5 horizontal, 5 vertical 
+		//Olika objekt? Är objekten de olika "stegen"? 
+		//En för texturPos, Normaler, Färg, Ljus...
+		//Behövs en helt egen för glow? Eller räcker det med att ta en vi redan har?
+		//Hur många saker får plats i en gBuffer? Behöver man flera? Vilka har vi? Vilka behövs inte?
+		//Är detta en korrekt buffer? Eller har vi redan en sådan? Behöver jag ändra parametrar? VAD SKA JAG HA I gBUFFERN?
+		//Hur blir det med Shaders? Hur många shaders kommer jag behöva skriva enbart för glow? Minst två för varje objekt? Då den nuvarande har två men vi behöver fler för en glow
+		//och en blur effekt. Kan de ligga i samma? Behöver ljusen en egen shader? Finns det? Måste det skrivas? Vart implementerar jag resten av gBuffer? Game-loop?
+		//Kombinera sakerna i buffern? Multiplicera eller sker det automatiskt? Hur gör jag isåfall det? Kommando/funktion?
 
+
+		//Jag har bara ett enda objekt på skärmen och hela det objektet ska ha glow effekt. 
+		//1. Rendera normalt.
+		//2. Rendera samma modell med glow effect ovanpå den första rendreringen.
+
+		//Glow sker med Gaussian-blur. (Blurra horizontalt och sedan verticalt, two-pass) 
+		//Hur görs detta? Hur gör man två-pass saker?
+		//I vilken shader ska gaussian blur implementeras? Vad behöver gaussian-blur för att kunna köras, parametrar osv.
+
+		//glowbuffer
+		GLuint glowFBO;
+		glGenFramebuffers(1, &glowFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, glowFBO);
+		GLuint colorBuffers[2];
+		glGenTextures(2, colorBuffers);
+		for (int i = 0; i < 2; i++)
+		{
+			glBindTexture (GL_TEXTURE_2D, colorBuffers[i]);
+			glTexImage2D(
+				GL_TEXTURE_2D,
+				0,
+				GL_RGB16F,
+				800,
+				600,
+				0,
+				GL_RGB,
+				GL_FLOAT,
+				NULL);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
+			glFramebufferTexture2D(
+				GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, colorBuffers[i], 0);
+		}
+
+		GLuint attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
+		glDrawBuffers(2, attachments);
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+		{
+			printf("Framebuffer not complete!");
+		}
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+		//blurbuffer
+		GLuint blurFBO[2];
+		GLuint blurColorbuffers[2];
+		glGenFramebuffers(2, blurFBO);
+		glGenTextures(2, blurColorbuffers);
+		for (int i = 0; i < 2; i++)
+		{
+			glBindFramebuffer(GL_FRAMEBUFFER, blurFBO[i]);
+			glBindTexture(GL_TEXTURE_2D, blurColorbuffers[i]);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, 800, 600, 0, GL_RGB, GL_FLOAT, NULL);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, blurColorbuffers[i], 0);
+			if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+			{
+				printf("Framebuffer not complete!");
+			}
+		}
+
+		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
 		shader.use();
 		shader.setUniform("view", lookAt(vec3(0, 0, -10), O, Y));
@@ -57,6 +129,10 @@ int main()
 			thisFrame = window.getTime();
 			deltaTime = thisFrame - lastFrame;
 			window.pollEvents();
+			//render once. Render geometry into gbuffer?
+			glBindFramebuffer (GL_FRAMEBUFFER, glowFBO);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
 			shader.use();
 			shader.setUniform("globalTime", (float)glfwGetTime());
 			shader.setUniform("world", 
@@ -66,9 +142,10 @@ int main()
 					(float)glfwGetTime(), Z), (float)glfwGetTime(), X)
 			);
 			render(&manet);
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			//Glow effect -> render again
 
-			//glow
-
+			
 
 			camera.update(deltaTime);
 			defferedRenderer.draw(camera, objectManager, lightManager);
@@ -84,6 +161,8 @@ int main()
 		printf("\nPress enter to exit...");
 		getchar();
 	}
-	
+
+	//Delete the buffer
+
 	return 0;
 }
