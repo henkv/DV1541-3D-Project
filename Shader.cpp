@@ -121,6 +121,11 @@ void Shader::setUniform(const GLchar * name, const int & value)
 	glUniform1i(getUniform(name), value);
 }
 
+void Shader::setUniform(const GLchar * name, const int & value)
+{
+	glUniform1i(getUniform(name), value);
+}
+
 void Shader::setUniform(const GLchar * name, const float & value)
 {
 	glUniform1f(getUniform(name), value);
