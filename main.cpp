@@ -55,23 +55,6 @@ int main()
 		glUniform1i(glGetUniformLocation(shaderBloomFin, "scene"), 0);
 		glUniform1i(glGetUniformLocation(shaderBloomFin, "bloomBlur"), 1);
 
-		//Olika objekt? Är objekten de olika "stegen"? 
-		//En för texturPos, Normaler, Färg, Ljus...
-		//Behövs en helt egen för glow? Eller räcker det med att ta en vi redan har?
-		//Hur många saker får plats i en gBuffer? Behöver man flera? Vilka har vi? Vilka behövs inte?
-		//Är detta en korrekt buffer? Eller har vi redan en sådan? Behöver jag ändra parametrar? VAD SKA JAG HA I gBUFFERN?
-		//Hur blir det med Shaders? Hur många shaders kommer jag behöva skriva enbart för glow? Minst två för varje objekt? Då den nuvarande har två men vi behöver fler för en glow
-		//och en blur effekt. Kan de ligga i samma? Behöver ljusen en egen shader? Finns det? Måste det skrivas? Vart implementerar jag resten av gBuffer? Game-loop?
-		//Kombinera sakerna i buffern? Multiplicera eller sker det automatiskt? Hur gör jag isåfall det? Kommando/funktion?
-
-
-		//Jag har bara ett enda objekt på skärmen och hela det objektet ska ha glow effekt. 
-		//1. Rendera normalt.
-		//2. Rendera samma modell med glow effect ovanpå den första rendreringen.
-
-		//Glow sker med Gaussian-blur. (Blurra horizontalt och sedan verticalt, two-pass) 
-		//Hur görs detta? Hur gör man två-pass saker?
-		//I vilken shader ska gaussian blur implementeras? Vad behöver gaussian-blur för att kunna köras, parametrar osv.
 
 		//glowbuffer
 		GLuint hdrFBO;
@@ -132,8 +115,8 @@ int main()
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-		//shader.use();
-		/*shader.setUniform("view", lookAt(vec3(0, 0, -10), O, Y));
+		/*shader.use();
+		shader.setUniform("view", lookAt(vec3(0, 0, -10), O, Y));
 		shader.setUniform("projection", perspective(pi<float>() * 0.2f, 8.f / 6.f, 0.1f, 100.f));
 		shader.setUniform("viewPoint", vec3(0, 0, -10));
 		objectManager.add(&manet);
@@ -163,7 +146,7 @@ int main()
 			render(&manet);
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
-			//Glow effect -> render again
+			////Glow effect -> render again
 			GLboolean horizontal = true, first_iteration = true;
 			GLuint amount = 10;
 			//blurrrrrr
