@@ -148,6 +148,12 @@
     <None Include="shaders\Phong.vert">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="shaders\blur_vertex.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\bloom_fin_frag.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Arbetsuppdelning.txt">

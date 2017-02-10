@@ -15,6 +15,15 @@
 const size_t WINDOW_WIDTH = 800;
 const size_t WINDOW_HEIGHT = 600;
 
+const mat4 I;
+const vec3 O = { 0, 0, 0 };
+const vec3 X = { 1, 0, 0 };
+const vec3 Y = { 0, 1, 0 };
+const vec3 Z = { 0, 0, 1 };
+
+GLboolean bloom = true;
+GLfloat exposure = 1.0f;
+
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
@@ -37,7 +46,14 @@ int main()
 
 		Window window = { "DV1541 3D Project", 800, 600 };
 		Shader shader = { "shaders/VertexShader.glsl", "shaders/BackfaceCulling.glsl", "shaders/FragmentShader.glsl" };
+		Shader blurShader = { "shaders/blur_vertex.glsl", "shaders/blur_frag.glsl" };
+		Shader shaderBloomFin = { "shaders/blur_vertex.glsl", "shaders/bloom_fin_frag.glsl" };
 		Model manet = { "models/manet.obj" };
+
+		//Samplers
+		shaderBloomFin.use();
+		glUniform1i(glGetUniformLocation(shaderBloomFin, "scene"), 0);
+		glUniform1i(glGetUniformLocation(shaderBloomFin, "bloomBlur"), 1);
 
 		//Olika objekt? Är objekten de olika "stegen"? 
 		//En för texturPos, Normaler, Färg, Ljus...
@@ -58,9 +74,9 @@ int main()
 		//I vilken shader ska gaussian blur implementeras? Vad behöver gaussian-blur för att kunna köras, parametrar osv.
 
 		//glowbuffer
-		GLuint glowFBO;
-		glGenFramebuffers(1, &glowFBO);
-		glBindFramebuffer(GL_FRAMEBUFFER, glowFBO);
+		GLuint hdrFBO;
+		glGenFramebuffers(1, &hdrFBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
 		GLuint colorBuffers[2];
 		glGenTextures(2, colorBuffers);
 		for (int i = 0; i < 2; i++)
@@ -116,8 +132,8 @@ int main()
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-		shader.use();
-		shader.setUniform("view", lookAt(vec3(0, 0, -10), O, Y));
+		//shader.use();
+		/*shader.setUniform("view", lookAt(vec3(0, 0, -10), O, Y));
 		shader.setUniform("projection", perspective(pi<float>() * 0.2f, 8.f / 6.f, 0.1f, 100.f));
 		shader.setUniform("viewPoint", vec3(0, 0, -10));
 		objectManager.add(&manet);
@@ -130,10 +146,13 @@ int main()
 			deltaTime = thisFrame - lastFrame;
 			window.pollEvents();
 			//render once. Render geometry into gbuffer?
-			glBindFramebuffer (GL_FRAMEBUFFER, glowFBO);
+			glBindFramebuffer (GL_FRAMEBUFFER, hdrFBO);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			shader.use();
+			shader.setUniform("view", lookAt(vec3(0, 0, -10), O, Y));
+			shader.setUniform("projection", perspective(pi<float>() * 0.2f, 8.f / 6.f, 0.1f, 100.f));
+			shader.setUniform("viewPoint", vec3(0, 0, -10));
 			shader.setUniform("globalTime", (float)glfwGetTime());
 			shader.setUniform("world", 
 				rotate(
@@ -143,7 +162,36 @@ int main()
 			);
 			render(&manet);
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
 			//Glow effect -> render again
+			GLboolean horizontal = true, first_iteration = true;
+			GLuint amount = 10;
+			//blurrrrrr
+			blurShader.use();
+			for (int i = 0; i < amount; i++)
+			{
+				glBindFramebuffer (GL_FRAMEBUFFER, blurFBO[horizontal]);
+				glUniform1i(glGetUniformLocation(blurShader, "horizontal"), horizontal);
+				glBindTexture(GL_TEXTURE_2D, first_iteration ? colorBuffers[1] : blurColorbuffers[!horizontal]);
+				render(&manet);
+				horizontal = !horizontal;
+				if (first_iteration)
+				{
+					first_iteration = false;
+				}
+			}
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+			//???
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+			shaderBloomFin.use();
+			glActiveTexture(GL_TEXTURE0);
+			glBindTexture(GL_TEXTURE_2D, colorBuffers[0]);
+			glActiveTexture(GL_TEXTURE1);
+			glBindTexture(GL_TEXTURE_2D, blurColorbuffers[!horizontal]);
+			glUniform1i(glGetUniformLocation(shaderBloomFin, "bloom"), bloom);
+			glUniform1i(glGetUniformLocation(shaderBloomFin, "exposure"), exposure);
+			render(&manet);
 
 			
 

@@ -196,7 +196,9 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="shaders\bloom_fin_frag.glsl" />
     <None Include="shaders\blur_frag.glsl" />
+    <None Include="shaders\blur_vertex.glsl" />
     <None Include="shaders\FragmentShader.glsl" />
     <None Include="shaders\BackfaceCulling.glsl" />
     <None Include="shaders\GeometryPass.frag" />
