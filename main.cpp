@@ -52,9 +52,8 @@ int main()
 
 		//Samplers
 		shaderBloomFin.use();
-		glUniform1i(glGetUniformLocation(shaderBloomFin, "scene"), 0);
-		glUniform1i(glGetUniformLocation(shaderBloomFin, "bloomBlur"), 1);
-
+		shaderBloopFin.setUniform("scene", 0);
+		shaderBloopFin.setUniform("bloomBlur", 1);
 
 		//glowbuffer
 		GLuint hdrFBO;
