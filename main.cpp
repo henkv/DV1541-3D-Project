@@ -55,6 +55,7 @@ int main()
 		shaderBloopFin.setUniform("scene", 0);
 		shaderBloopFin.setUniform("bloomBlur", 1);
 
+
 		//glowbuffer
 		GLuint hdrFBO;
 		glGenFramebuffers(1, &hdrFBO);
@@ -114,12 +115,11 @@ int main()
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
-		/*shader.use();
+		shader.use();
 		shader.setUniform("view", lookAt(vec3(0, 0, -10), O, Y));
 		shader.setUniform("projection", perspective(pi<float>() * 0.2f, 8.f / 6.f, 0.1f, 100.f));
 		shader.setUniform("viewPoint", vec3(0, 0, -10));
-		objectManager.add(&manet);
-
+		
 
 		double thisFrame = 0, lastFrame = 0, deltaTime = 0;
 		while (window.isOpen())
@@ -132,9 +132,9 @@ int main()
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			shader.use();
-			shader.setUniform("view", lookAt(vec3(0, 0, -10), O, Y));
+			/*shader.setUniform("view", lookAt(vec3(0, 0, -10), O, Y));
 			shader.setUniform("projection", perspective(pi<float>() * 0.2f, 8.f / 6.f, 0.1f, 100.f));
-			shader.setUniform("viewPoint", vec3(0, 0, -10));
+			shader.setUniform("viewPoint", vec3(0, 0, -10));*/
 			shader.setUniform("globalTime", (float)glfwGetTime());
 			shader.setUniform("world", 
 				rotate(
@@ -153,7 +153,7 @@ int main()
 			for (int i = 0; i < amount; i++)
 			{
 				glBindFramebuffer (GL_FRAMEBUFFER, blurFBO[horizontal]);
-				glUniform1i(glGetUniformLocation(blurShader, "horizontal"), horizontal);
+				glUniform1i(blurShader.getUniform("horizontal"), horizontal);
 				glBindTexture(GL_TEXTURE_2D, first_iteration ? colorBuffers[1] : blurColorbuffers[!horizontal]);
 				render(&manet);
 				horizontal = !horizontal;
@@ -171,8 +171,8 @@ int main()
 			glBindTexture(GL_TEXTURE_2D, colorBuffers[0]);
 			glActiveTexture(GL_TEXTURE1);
 			glBindTexture(GL_TEXTURE_2D, blurColorbuffers[!horizontal]);
-			glUniform1i(glGetUniformLocation(shaderBloomFin, "bloom"), bloom);
-			glUniform1i(glGetUniformLocation(shaderBloomFin, "exposure"), exposure);
+			glUniform1i(shaderBloomFin.getUniform("bloom"), bloom);
+			glUniform1i(shaderBloomFin.getUniform("exposure"), exposure);
 			render(&manet);
 
 			
