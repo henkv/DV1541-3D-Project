@@ -197,6 +197,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\bloom_fin_frag.glsl" />
+    <None Include="shaders\bloom_light_frag.glsl" />
     <None Include="shaders\blur_frag.glsl" />
     <None Include="shaders\blur_vertex.glsl" />
     <None Include="shaders\FragmentShader.glsl" />

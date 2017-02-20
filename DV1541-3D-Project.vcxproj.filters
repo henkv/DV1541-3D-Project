@@ -154,6 +154,9 @@
     <None Include="shaders\bloom_fin_frag.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="shaders\bloom_light_frag.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Arbetsuppdelning.txt">

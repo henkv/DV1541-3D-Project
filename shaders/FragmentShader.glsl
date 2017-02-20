@@ -1,15 +1,20 @@
 #version 440 core
 layout(location = 0) in vec3 fragment_position;
 layout(location = 1) in vec3 fragment_normal;
+in vec2 TexCoords;
 
 layout(location = 3) uniform vec3 viewPosition;
 
 out vec4 fragment_color;
+out vec4 bright_color;
 	
 vec3 ambient_light = vec3(0.f, 0.f, 0.f);
 vec3 light_position = vec3(0.f, 0.f, -100.f);
 vec3 light_color = vec3(1.f, 1.f, 1.f);
 float specularStrength = 0.5f;
+
+uniform vec3 view;
+uniform sampler2D diffuseTexture;
 
 vec4 ambient()
 {
