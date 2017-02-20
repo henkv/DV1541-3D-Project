@@ -8,7 +8,17 @@ void Window::CallbackHandler::error(int error, const char * message)
 
 void Window::CallbackHandler::key(GLFWwindow * window, int key, int scancode, int action, int mods)
 {
-	
+	if (key != -1)
+	{
+		if (action == GLFW_PRESS)
+		{
+			Input::setKey((Input::Key)key, true);
+		}
+		else if (action == GLFW_RELEASE)
+		{
+			Input::setKey((Input::Key)key, false);
+		}
+	}
 }
 
 void Window::CallbackHandler::subscribe(GLFWwindow * window, Window * windowObj)

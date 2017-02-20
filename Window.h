@@ -2,13 +2,16 @@
 #include <glad\glad.h>
 #include <GLFW\glfw3.h>
 #include <map>
-
+#include "Input.h"
 
 class Window
 {
 private:
 	static class CallbackHandler
 	{
+	private:
+		Input inputNotifier;
+
 	public:
 		static void error(int error, const char * message);
 		static void key(GLFWwindow* window, int key, int scancode, int action, int mods);

@@ -163,6 +163,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="libs\glad-4.5-core\src\glad.c" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LightManager.cpp" />
@@ -178,6 +179,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="LightManager.h" />
     <ClInclude Include="Material.h" />
@@ -185,7 +187,9 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="FullscreenQuad.h" />
+    <ClInclude Include="Observer.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Subject.h" />
     <ClInclude Include="UID.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

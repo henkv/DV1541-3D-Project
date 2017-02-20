@@ -25,6 +25,7 @@ void LightningPass(GBuffer gBuffer, Shader & shader, LightManager & lights, Came
 
 int main()
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
 	try
 	{
@@ -52,10 +53,10 @@ int main()
 			deltaTime = thisFrame - lastFrame;
 			window.pollEvents();
 
-			camera.rotate(cos(thisFrame) * deltaTime * 0.5, 0);
+			camera.rotate((float)cos(thisFrame) * (float)deltaTime * 0.5f, 0.f);
 
 
-			objectManager.update(lastFrame - thisFrame);
+			objectManager.update((float)(lastFrame - thisFrame));
 
 			GeometryPass(gBuffer.gBuffer, geometryPassShader, objectManager, camera);
 			LightningPass(gBuffer, lightPassShader, lightManager, camera, quad);
