@@ -4,10 +4,10 @@
 FullscreenQuad::FullscreenQuad()
 {
 	Vertex vertices[4] = {
-		{ { -1,  1, 0 }, { 0, 1 } },
-		{ {  1,  1, 0 }, { 1, 1 } },
 		{ { -1, -1, 0 }, { 0, 0 } },
-		{ {  1, -1, 0 }, { 1, 0 } }
+		{ { -1,  1, 0 }, { 0, 1 } },
+		{ {  1, -1, 0 }, { 1, 0 } },
+		{ {  1,  1, 0 }, { 1, 1 } }
 	};
 
 	glGenVertexArrays(1, &vertexArray);

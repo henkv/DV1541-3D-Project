@@ -12,5 +12,5 @@ void main()
 {
 	Position = FragPosition;
 	Normal = FragNormal;
-	ColorSpec = vec4(0.2, 0.6, 1.0, 1.0);
+	ColorSpec = vec4(abs(normalize(Position)), 1.0);
 }

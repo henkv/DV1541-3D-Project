@@ -1,14 +1,29 @@
 #include "Camera.h"
 
+const float Camera::twoPi = two_pi<float>();
+const float Camera::rPitchLimit = half_pi<float>() - epsilon<float>();
 
+vec3 Camera::eulerToDir(float yaw, float pitch)
+{
+	vec3 dir;
 
-Camera::Camera(vec3 position, vec3 direction, vec3 up)
+	dir.x = cos(yaw) *  cos(pitch);
+	dir.y = sin(pitch);
+	dir.z = sin(yaw) *  cos(pitch);
+
+	return dir;
+}
+
+Camera::Camera(vec3 position, vec3 point, vec3 up)
 {
 	this->position = position;
-	this->direction = direction;
+	this->direction = normalize(point - position);
 	this->up = up;
 
-	viewMatrix = lookAt(position, position + direction, up);
+	this->rPitch = asin(direction.y);
+	this->rYaw = acos(direction.x / cos(rPitch));
+
+	viewMatrix = lookAt(position, point, up);
 	projectionMatrix = perspective(pi<float>() * 0.2f, 8.f / 6.f, 0.1f, 100.f);
 }
 
@@ -64,5 +79,14 @@ void Camera::setProjectionMatrix(mat4 projectionMatrix)
 void Camera::move(vec3 delta)
 {
 	position += delta;
+	viewMatrix = lookAt(position, position + direction, up);
+}
+
+void Camera::rotate(float deltaYaw, float deltaPitch)
+{
+	rYaw = fmodf(rYaw + deltaYaw, twoPi);
+	rPitch = min(max(rPitch + deltaPitch, -rPitchLimit), rPitchLimit);;
+
+	direction = eulerToDir(rYaw, rPitch);
 	viewMatrix = lookAt(position, position + direction, up);
 }

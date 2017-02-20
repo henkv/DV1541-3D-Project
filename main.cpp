@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <glad\glad.h>
 #include <glm\gtc\matrix_transform.hpp>
@@ -30,7 +29,7 @@ int main()
 	try
 	{
 		Window window = { "DV1541 3D Project", WINDOW_WIDTH, WINDOW_HEIGHT };
-		Camera camera = { {0,0,-10}, {0,0,1}, {0,1,0} };
+		Camera camera = { {0, 0, -5}, {0,0,0}, {0,1,0} };
 		FullscreenQuad quad;
 
 		Shader phongShader("shaders/Phong-Vertex.glsl", "shaders/Phong-Fragment.glsl");
@@ -46,12 +45,17 @@ int main()
 		objectManager.add(&manet);
 
 
-		double thisFrame = 0, lastFrame = 0;
+		double thisFrame = 0, lastFrame = 0, deltaTime = 0;
 		while (window.isOpen())
 		{
 			thisFrame = window.getTime();
+			deltaTime = thisFrame - lastFrame;
 			window.pollEvents();
 
+			camera.rotate(cos(thisFrame) * deltaTime * 0.5, 0);
+
+
+			objectManager.update(lastFrame - thisFrame);
 
 			GeometryPass(gBuffer.gBuffer, geometryPassShader, objectManager, camera);
 			LightningPass(gBuffer, lightPassShader, lightManager, camera, quad);
