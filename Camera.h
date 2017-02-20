@@ -39,5 +39,7 @@ public:
 
 	void move(vec3 delta);
 	void rotate(float deltaYaw, float deltaPitch);
+
+	void update(float delta);
 };
 

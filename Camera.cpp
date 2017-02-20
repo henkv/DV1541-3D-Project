@@ -1,4 +1,6 @@
 #include "Camera.h"
+#include <glm\gtx\rotate_vector.hpp>
+#include "Input.h"
 
 const float Camera::twoPi = two_pi<float>();
 const float Camera::rPitchLimit = half_pi<float>() - epsilon<float>();
@@ -89,4 +91,26 @@ void Camera::rotate(float deltaYaw, float deltaPitch)
 
 	direction = eulerToDir(rYaw, rPitch);
 	viewMatrix = lookAt(position, position + direction, up);
+}
+
+void Camera::update(float delta)
+{
+	rotate(
+		delta * Input::getKey(Input::KEY_E) -
+		delta * Input::getKey(Input::KEY_Q)
+	, 
+		delta * Input::getKey(Input::KEY_T) -
+		delta * Input::getKey(Input::KEY_G)
+	);
+
+	vec3 deltaMove(0, 0, 0);
+	deltaMove.z += Input::getKey(Input::KEY_W) * delta * 2;
+	deltaMove.x += Input::getKey(Input::KEY_A) * delta * 2;
+	deltaMove.z -= Input::getKey(Input::KEY_S) * delta * 2;
+	deltaMove.x -= Input::getKey(Input::KEY_D) * delta * 2;
+
+	deltaMove.y += Input::getKey(Input::KEY_R) * delta * 2;
+	deltaMove.y -= Input::getKey(Input::KEY_F) * delta * 2;
+
+	move(deltaMove);
 }

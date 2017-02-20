@@ -30,9 +30,9 @@ vec3 specularColor(vec3 lightColor, vec3 lightPosition,
 	vec3 lightDir = normalize(lightPosition - fragPosition);
 	vec3 viewDir = normalize(viewPosition - fragPosition);
 	vec3 reflectDir = reflect(-lightDir, fragNormal);
-	float factor = pow(max(dot(viewDir, reflectDir), 0), 32);
+	float factor = pow(max(dot(viewDir, reflectDir), 0), 4);
 
-	return lightColor * factor * specularStrength;
+	return lightColor * factor * 1;
 }
 
 void main()
