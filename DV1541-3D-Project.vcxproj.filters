@@ -112,6 +112,24 @@
     <None Include="shaders\BackfaceCulling.glsl">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="shaders\GeometryPass-Fragment.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\GeometryPass-Vertex.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\LightPass-Fragment.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\LightPass-Vertex.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\Phong-Fragment.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\Phong-Vertex.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Arbetsuppdelning.txt">
