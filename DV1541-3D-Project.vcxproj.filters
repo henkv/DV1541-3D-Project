@@ -22,6 +22,12 @@
     <Filter Include="Classes\Source Files">
       <UniqueIdentifier>{173b5af4-d743-4e9a-b33b-2393a02eb634}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Bloom">
+      <UniqueIdentifier>{e36bc5c5-0b16-450b-b196-7210fecbfda2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Blur">
+      <UniqueIdentifier>{ffbf19e6-a7f8-47c4-aa68-e12d100df6e8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Shader.cpp">
@@ -147,15 +153,17 @@
     </None>
     <None Include="shaders\Phong.vert">
       <Filter>Resource Files</Filter>
-    </None>
-    <None Include="shaders\blur_vertex.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="shaders\bloom_fin_frag.glsl">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Bloom</Filter>
     </None>
     <None Include="shaders\bloom_light_frag.glsl">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Bloom</Filter>
+    </None>
+    <None Include="shaders\blur_frag.glsl">
+      <Filter>Resource Files\Blur</Filter>
+    </None>
+    <None Include="shaders\blur_vertex.glsl">
+      <Filter>Resource Files\Blur</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

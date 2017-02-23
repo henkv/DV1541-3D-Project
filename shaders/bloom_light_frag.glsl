@@ -12,7 +12,7 @@ uniform vec3 lightColor;
 void main()
 {
 	fragment_color = vec4(lightColor, 1.0);
-	float brightness= dot(fragment_color.rgb, vec3(0.2126, 0.7152, 0.0722));
+	float brightness = dot(fragment_color.rgb, vec3(0.2126, 0.7152, 0.0722));
 	if(brightness > 1.0)
 	{
 		bright_color = vec4(fragment_color.rgb, 1.0);
