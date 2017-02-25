@@ -14,14 +14,13 @@ float specularStrength = 0.5f;
 uniform vec3 view;
 uniform sampler2D diffuseTexture;
 
-vec4 ambient()
+vec3 ambient()
 {
-  return vec4(ambient_light, 1.f);
+  return vec3(ambient_light);
 }
 
-vec4 diffuse()
+vec3 diffuse()
 {
-  vec4 diffuseColor = vec4(light_color, 1.f);
   vec3 lightDir = normalize(light_position - fragment_position);
 
 

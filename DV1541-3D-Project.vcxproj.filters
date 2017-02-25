@@ -127,12 +127,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shaders\FragmentShader.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="shaders\VertexShader.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="shaders\BackfaceCulling.glsl">
       <Filter>Resource Files</Filter>
     </None>
@@ -164,6 +158,12 @@
     </None>
     <None Include="shaders\blur_vertex.glsl">
       <Filter>Resource Files\Blur</Filter>
+    </None>
+    <None Include="shaders\GeometryAndBloomShader.vert">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\GeometryAndBloomShader.frag">
+      <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

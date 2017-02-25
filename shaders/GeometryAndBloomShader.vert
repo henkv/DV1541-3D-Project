@@ -14,16 +14,11 @@ layout(location = 3) uniform vec3 viewPosition;
 
 void main()
 {
-	
-
 	position = vec3(world * vec4(vertex_position, 1.0f));
 	texCoords_out = texCoords_in;
 
-	//mat3 normalMatrix = transpose(inverse(mat3(world)));
-	//normal = normalize (normalMatrix * normal);
-
 	normal = normalize(vec3(world * vec4(vertex_normal, 0.0f)));
 	
-	gl_Position = projection * view * world * vec4(position, 1.0f);
+	gl_Position = projection * view * vec4(position, 1.0f);
   
 }

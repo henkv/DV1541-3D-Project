@@ -200,7 +200,7 @@
     <None Include="shaders\bloom_light_frag.glsl" />
     <None Include="shaders\blur_frag.glsl" />
     <None Include="shaders\blur_vertex.glsl" />
-    <None Include="shaders\FragmentShader.glsl" />
+    <None Include="shaders\GeometryAndBloomShader.frag" />
     <None Include="shaders\BackfaceCulling.glsl" />
     <None Include="shaders\GeometryPass.frag" />
     <None Include="shaders\GeometryPass.vert" />

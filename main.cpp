@@ -21,7 +21,8 @@ void createBlurFBO(GLuint blurFBO[], GLuint blurColorbuffers[]);
 
 void renderGeometry(Shader &shader, Shader &lightShader, Model &manet, GLuint &hdrFBO);
 //void renderLight(Shader &lightShader, Model &manet, GLuint &hdrFBO);
-void glowEffect(Shader &blurShader, Shader &shaderBloomFin, GLuint blurFBO[], GLuint colorBuffers[], GLuint blurColorbuffers[], Model &manet);
+void blurEffect(Shader &blurShader, Shader &shaderBloomFin, GLuint blurFBO[], GLuint colorBuffers[], GLuint blurColorbuffers[], Model &manet);
+void merge(Shader &shaderBloomFin, Shader &blurShader, GLuint colorBuffers[], GLuint blurColorbuffers[]);
 
 const mat4 I;
 const vec3 O = { 0, 0, 0 };
@@ -53,8 +54,8 @@ int main()
 		lightManager.add(LightManager::Light( vec3(  0, 10,   0), vec3(1, 1, 1) ));
 
 		Window window = { "DV1541 3D Project", 800, 600 };
-		Shader shader = { "shaders/VertexShader.glsl", "shaders/BackfaceCulling.glsl", "shaders/FragmentShader.glsl" };
-		Shader lightShader = { "shaders/VertexShader.glsl", "shaders/bloom_light_frag.glsl" };
+		Shader geometryAndBloomShader = { "shaders/GeometryAndBloomShader.vert", /*"shaders/BackfaceCulling.glsl",*/ "shaders/GeometryAndBloomShader.frag" };
+		//Shader lightShader = { "shaders/VertexShader.glsl", "shaders/bloom_light_frag.glsl" };
 		Shader blurShader = { "shaders/blur_vertex.glsl", "shaders/blur_frag.glsl" };
 		Shader shaderBloomFin = { "shaders/blur_vertex.glsl", "shaders/bloom_fin_frag.glsl" };
 		Model manet = { "models/manet.obj" };
@@ -70,6 +71,7 @@ int main()
 		//blurbuffer
 		GLuint blurFBO[2];
 		GLuint blurColorbuffers[2];
+		createBlurFBO(blurFBO, blurColorbuffers);
 
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -77,9 +79,14 @@ int main()
 		{
 			window.pollEvents();
 			//render once. Render geometry into gbuffer?
-			renderGeometry(shader, lightShader, manet, hdrFBO);
+			renderGeometry(geometryAndBloomShader, geometryAndBloomShader, manet, hdrFBO);
 			//Glow effect -> render again
-			glowEffect(blurShader, shaderBloomFin, blurFBO, colorBuffers, blurColorbuffers, manet);
+			blurEffect(blurShader, shaderBloomFin, blurFBO, colorBuffers, blurColorbuffers, manet);
+
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			merge(shaderBloomFin, blurShader, colorBuffers, blurColorbuffers);
 
 			window.swapBuffers();
 		}
@@ -169,6 +176,13 @@ void createhdrBuffer(GLuint &hdrFBO, GLuint colorBuffers[])
 			GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + i, GL_TEXTURE_2D, colorBuffers[i], 0);
 	}
 
+	// - Create and attach depth buffer (renderbuffer)
+	GLuint rboDepth;
+	glGenRenderbuffers(1, &rboDepth);
+	glBindRenderbuffer(GL_RENDERBUFFER, rboDepth);
+	glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, 800, 600);
+	glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, rboDepth);
+
 	GLuint attachments[2] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1 };
 	glDrawBuffers(2, attachments);
 	if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
@@ -192,6 +206,7 @@ void createBlurFBO(GLuint blurFBO[], GLuint blurColorbuffers[])
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, blurColorbuffers[i], 0);
+
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 		{
 			printf("Framebuffer not complete!");
@@ -201,17 +216,17 @@ void createBlurFBO(GLuint blurFBO[], GLuint blurColorbuffers[])
 
 }
 
-void renderGeometry(Shader &shader, Shader &lightShader, Model &manet, GLuint &hdrFBO)
+void renderGeometry(Shader &geometryAndBloomShader, Shader &lightShader, Model &manet, GLuint &hdrFBO)
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, hdrFBO);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	shader.use();
-	shader.setUniform("view", lookAt(vec3(0, 0, -10), O, Y));
-	shader.setUniform("projection", perspective(pi<float>() * 0.2f, 8.f / 6.f, 0.1f, 100.f));
-	shader.setUniform("viewPoint", vec3(0, 0, -10));
-	shader.setUniform("globalTime", (float)glfwGetTime());
-	shader.setUniform("world",
+	geometryAndBloomShader.use();
+	geometryAndBloomShader.setUniform("view", lookAt(vec3(0, 0, -10), O, Y));
+	geometryAndBloomShader.setUniform("projection", perspective(pi<float>() * 0.2f, 8.f / 6.f, 0.1f, 100.f));
+	geometryAndBloomShader.setUniform("viewPoint", vec3(0, 0, -10));
+	geometryAndBloomShader.setUniform("globalTime", (float)glfwGetTime());
+	geometryAndBloomShader.setUniform("world",
 		rotate(
 			rotate(
 				rotate(I, (float)glfwGetTime(), Y),
@@ -234,15 +249,17 @@ void renderGeometry(Shader &shader, Shader &lightShader, Model &manet, GLuint &h
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void glowEffect(Shader &blurShader, Shader &shaderBloomFin, GLuint blurFBO[], GLuint colorBuffers[], GLuint blurColorbuffers[], Model &manet)
+void blurEffect(Shader &blurShader, Shader &shaderBloomFin, GLuint blurFBO[], GLuint colorBuffers[], GLuint blurColorbuffers[], Model &manet)
 {
 	GLboolean horizontal = true, first_iteration = true;
 	GLuint amount = 10;
 	//blurrrrrr
 	blurShader.use();
-
+	
+/*
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, colorBuffers[1]);
+	glBindTexture(GL_TEXTURE_2D, colorBuffers[1]);*/
+	blurShader.setUniform("image", 0);
 
 	for (int i = 0; i < amount; i++)
 	{
@@ -257,20 +274,26 @@ void glowEffect(Shader &blurShader, Shader &shaderBloomFin, GLuint blurFBO[], GL
 		}
 	}
 
-	
-
+}
+void merge(Shader &shaderBloomFin, Shader &blurShader, GLuint colorBuffers[], GLuint blurColorbuffers[])
+{
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
 	shaderBloomFin.use();
+
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, colorBuffers[0]);
+	shaderBloomFin.setUniform("scene", 0);
+
 	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, colorBuffers[1]);
+	glBindTexture(GL_TEXTURE_2D, blurColorbuffers[0]);
+	shaderBloomFin.setUniform("bloomBlur", 1);
+
+
 	shaderBloomFin.setUniform("bloom", bloom);
 	shaderBloomFin.setUniform("exposure", exposure);
-	blurShader.use();
-	blurShader.setUniform("image", 1);
+
+
+	
 
 	renderFullscreenQuad();
 }
