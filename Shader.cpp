@@ -12,6 +12,9 @@ GLuint Shader::loadShader(GLenum shaderType, const GLchar * filePath)
 	std::string text = { std::istreambuf_iterator<char>(file),  std::istreambuf_iterator<char>() };
 	file.close();
 
+	if (text.length() == 0)
+		throw "shader source empty";
+
 	const GLchar * textPtr = text.c_str();
 	glShaderSource(shader, 1, &textPtr, NULL);
 	glCompileShader(shader);
@@ -105,7 +108,17 @@ GLint Shader::getUniform(const GLchar * name)
 {
 	if (activeProgram != program)
 		throw "cant get uniform, shader not active";
-	return glGetUniformLocation(program, name);
+
+	GLint location = glGetUniformLocation(program, name);
+	if (location == -1)
+		throw "cant find uniform, name not defined";
+
+	return location;
+}
+
+void Shader::setUniform(const GLchar * name, const int & value)
+{
+	glUniform1i(getUniform(name), value);
 }
 
 void Shader::setUniform(const GLchar * name, const float & value)
@@ -126,4 +139,11 @@ void Shader::setUniform(const GLchar * name, const vec3 & vector)
 void Shader::setUniform(const GLchar * name, const mat4 & matrix)
 {
 	glUniformMatrix4fv(getUniform(name), 1, GL_FALSE, value_ptr(matrix));
+}
+
+void Shader::setTexture2D(int id, const GLchar * name, GLuint texture)
+{
+	glActiveTexture(GL_TEXTURE0 + id);
+	glBindTexture(GL_TEXTURE_2D, texture);
+	setUniform(name, id);
 }

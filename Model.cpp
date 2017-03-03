@@ -20,7 +20,10 @@ Model::Model(const char * objPath)
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, Mesh::VertexSize, Mesh::PositionOffset);
 
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_TRUE, Mesh::VertexSize, Mesh::NormalOffset);
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, Mesh::VertexSize, Mesh::TexCoordOffset);
+
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_TRUE, Mesh::VertexSize, Mesh::NormalOffset);
 
 	glBindVertexArray(0);
 

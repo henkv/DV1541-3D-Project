@@ -42,27 +42,19 @@ void DefferedRenderer::lightPass(Camera & camera, LightManager & lights)
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	shaderLightPassShader.use();
-	shaderLightPassShader.setUniform("viewPosition", camera.getPosition());
+	shaderLightPass.use();
+	shaderLightPass.setUniform("viewPosition", camera.getPosition());
 
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texturePositions);
-	glUniform1i(0, 0);
+	shaderLightPass.setTexture2D(0, "Positions", texturePositions);
+	shaderLightPass.setTexture2D(1, "Normals", textureNormals);
+	shaderLightPass.setTexture2D(2, "ColorSpecs", textureColorSpecular);
 
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, textureNormals);
-	glUniform1i(1, 1);
-
-	glActiveTexture(GL_TEXTURE2);
-	glBindTexture(GL_TEXTURE_2D, textureColorSpecular);
-	glUniform1i(2, 2);
-
-	fsQuad.draw(shaderLightPassShader);
+	fsQuad.draw(shaderLightPass);
 }
 
 DefferedRenderer::DefferedRenderer(int width, int height)
-	: shaderGemetryPass("shaders/GeometryPass-Vertex.glsl", "shaders/GeometryPass-Fragment.glsl")
-	, shaderLightPassShader("shaders/LightPass-Vertex.glsl", "shaders/LightPass-Fragment.glsl")
+	: shaderGemetryPass("shaders/GeometryPass.vert", "shaders/GeometryPass.frag")
+	, shaderLightPass("shaders/LightPass.vert", "shaders/LightPass.frag")
 {
 	glGenFramebuffers(1, &gFrameBuffer);
 	glBindFramebuffer(GL_FRAMEBUFFER, gFrameBuffer);

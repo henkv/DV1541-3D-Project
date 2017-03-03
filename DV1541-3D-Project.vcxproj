@@ -198,12 +198,12 @@
   <ItemGroup>
     <None Include="shaders\FragmentShader.glsl" />
     <None Include="shaders\BackfaceCulling.glsl" />
-    <None Include="shaders\GeometryPass-Fragment.glsl" />
-    <None Include="shaders\GeometryPass-Vertex.glsl" />
-    <None Include="shaders\LightPass-Fragment.glsl" />
-    <None Include="shaders\LightPass-Vertex.glsl" />
-    <None Include="shaders\Phong-Fragment.glsl" />
-    <None Include="shaders\Phong-Vertex.glsl" />
+    <None Include="shaders\GeometryPass.frag" />
+    <None Include="shaders\GeometryPass.vert" />
+    <None Include="shaders\LightPass.frag" />
+    <None Include="shaders\LightPass.vert" />
+    <None Include="shaders\Phong.frag" />
+    <None Include="shaders\Phong.vert" />
     <None Include="shaders\VertexShader.glsl" />
   </ItemGroup>
   <ItemGroup>

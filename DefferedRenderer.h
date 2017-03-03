@@ -15,7 +15,7 @@ private:
 	GLuint textureColorSpecular;
 
 	Shader shaderGemetryPass;
-	Shader shaderLightPassShader;
+	Shader shaderLightPass;
 
 	GLuint genVec3Texture(int width, int height);
 	GLuint genColorTexture(int width, int height);

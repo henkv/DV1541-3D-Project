@@ -5,8 +5,8 @@
 
 const size_t Mesh::VertexSize = sizeof(Vertex);
 const void * Mesh::PositionOffset = (void *)offsetof(Vertex, position);
+const void * Mesh::TexCoordOffset = (void *)offsetof(Vertex, texCoord);
 const void * Mesh::NormalOffset   = (void *)offsetof(Vertex, normal);
-const void * Mesh::UVOffset		  = (void *)offsetof(Vertex, uv);
 
 void Mesh::parseObj(const char * objPath)
 {

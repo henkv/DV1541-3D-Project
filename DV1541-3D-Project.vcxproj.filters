@@ -130,22 +130,22 @@
     <None Include="shaders\BackfaceCulling.glsl">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="shaders\GeometryPass-Fragment.glsl">
+    <None Include="shaders\GeometryPass.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="shaders\GeometryPass-Vertex.glsl">
+    <None Include="shaders\GeometryPass.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="shaders\LightPass-Fragment.glsl">
+    <None Include="shaders\LightPass.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="shaders\LightPass-Vertex.glsl">
+    <None Include="shaders\LightPass.vert">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="shaders\Phong-Fragment.glsl">
+    <None Include="shaders\Phong.frag">
       <Filter>Resource Files</Filter>
     </None>
-    <None Include="shaders\Phong-Vertex.glsl">
+    <None Include="shaders\Phong.vert">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

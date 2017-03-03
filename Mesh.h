@@ -9,15 +9,15 @@ class Mesh
 public:
 	static const size_t VertexSize;
 	static const void * PositionOffset;
+	static const void * TexCoordOffset;
 	static const void * NormalOffset;
-	static const void * UVOffset;
 
 private:
 	struct Vertex
 	{
 		vec3 position;
+		vec2 texCoord;
 		vec3 normal;
-		vec2 uv;
 	};
 
 	vector<Vertex> vertices;

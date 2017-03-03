@@ -27,10 +27,13 @@ int main()
 
 		DefferedRenderer defferedRenderer(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-		Shader phongShader("shaders/Phong-Vertex.glsl", "shaders/Phong-Fragment.glsl");
+		Shader phongShader("shaders/Phong.vert", "shaders/Phong.frag");
 
 		GameObjectManager objectManager;
 		LightManager lightManager;
+		lightManager.add(LightManager::Light( vec3(-10,  0, -10), vec3(1, 0, 0) ));
+		lightManager.add(LightManager::Light( vec3( 10, -10, -10), vec3(.75, 1, 0) ));
+		lightManager.add(LightManager::Light( vec3(  0, 10,   0), vec3(1, 1, 1) ));
 
 		Model manet = { "models/manet.obj" };
 
