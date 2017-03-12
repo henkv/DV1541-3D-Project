@@ -45,6 +45,9 @@
     <ClCompile Include="Material.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FullscreenQuad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -62,6 +65,9 @@
     <ClInclude Include="Material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FullscreenQuad.h">
+      <Filter>Classes\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\FragmentShader.glsl">
@@ -71,6 +77,24 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="shaders\BackfaceCulling.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\ShadowVertexShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\ShadowFramentShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\WVertexShader2Pass.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\WFragmentShader2Pass.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\FullFragment.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\FullVertex.glsl">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

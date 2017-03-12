@@ -161,6 +161,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FullscreenQuad.cpp" />
     <ClCompile Include="libs\glad-4.5-core\src\glad.c" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Material.cpp" />
@@ -170,6 +171,7 @@
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FullscreenQuad.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
@@ -179,7 +181,13 @@
   <ItemGroup>
     <None Include="shaders\FragmentShader.glsl" />
     <None Include="shaders\BackfaceCulling.glsl" />
+    <None Include="shaders\FullFragment.glsl" />
+    <None Include="shaders\FullVertex.glsl" />
+    <None Include="shaders\ShadowFramentShader.glsl" />
+    <None Include="shaders\ShadowVertexShader.glsl" />
     <None Include="shaders\VertexShader.glsl" />
+    <None Include="shaders\WFragmentShader2Pass.glsl" />
+    <None Include="shaders\WVertexShader2Pass.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Arbetsuppdelning.txt" />
