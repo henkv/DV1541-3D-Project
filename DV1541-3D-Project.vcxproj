@@ -219,6 +219,8 @@
     <None Include="shaders\Phong.frag" />
     <None Include="shaders\Phong.vert" />
     <None Include="shaders\VertexShader.glsl" />
+    <None Include="shaders\WFragmentShader2Pass.glsl" />
+    <None Include="shaders\WVertexShader2Pass.glsl" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Arbetsuppdelning.txt" />

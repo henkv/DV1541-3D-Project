@@ -49,6 +49,9 @@
     <ClCompile Include="GlowEffect.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="FullscreenQuad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -101,6 +104,9 @@
     </ClInclude>
     <ClInclude Include="GlowEffect.h">
       <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="FullscreenQuad.h">
+      <Filter>Classes\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -166,6 +172,24 @@
     </None>
     <None Include="shaders\GlowMerge.frag">
       <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\ShadowVertexShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\ShadowFramentShader.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\WVertexShader2Pass.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\WFragmentShader2Pass.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\FullFragment.glsl">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="shaders\FullVertex.glsl">
+      <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
