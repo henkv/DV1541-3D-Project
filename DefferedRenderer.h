@@ -9,18 +9,24 @@
 class DefferedRenderer
 {
 private:
-	GLuint gFrameBuffer;
-	GLuint texturePositions;
-	GLuint textureNormals;
-	GLuint textureColorSpecular;
+	FullscreenQuad fullscreenQuad;
 
-	Shader shaderGemetryPass;
-	Shader shaderLightPass;
+	Shader geometryShader;
+	Shader lightShader;
 
-	GLuint genVec3Texture(int width, int height);
-	GLuint genColorTexture(int width, int height);
+	GLuint geometryFramebuffer;
+	GLuint positionsTexture;
+	GLuint normalsTexture;
+	GLuint colorsTexture;
 
-	FullscreenQuad fsQuad;
+	GLuint finalFramebuffer;
+	GLuint finalTexture;
+
+	GLuint generateVec3Texture(int width, int height);
+	GLuint generateColorTexture(int width, int height);
+
+	void createGeometryBuffers(int width, int height);
+	void createFinalBuffers(int width, int height);
 
 	void geometryPass(Camera & camera, GameObjectManager & gameObjects);
 	void lightPass(Camera & camera, LightManager & lights);
@@ -29,7 +35,8 @@ public:
 	DefferedRenderer(int width, int height);
 	~DefferedRenderer();
 
-	void draw(Camera & camera, GameObjectManager & gameObjects, LightManager & lights);
+	void renderScene(GameObjectManager & gameObjects, LightManager & lights, Camera & camera);
+	GLuint getFinalTexture();
 
 };
 

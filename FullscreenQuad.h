@@ -1,13 +1,15 @@
 #pragma once
 #include <glad\glad.h>
 #include <glm\glm.hpp>
-#include "GameObject.h"
+#include "Shader.h"
 
 using namespace glm;
 
 class FullscreenQuad
 {
 private:
+	Shader textureShader;
+
 	struct Vertex
 	{
 		vec3 position;
@@ -22,5 +24,6 @@ public:
 	~FullscreenQuad();
 
 	void draw();
+	void drawTexture(GLuint texture);
 };
 

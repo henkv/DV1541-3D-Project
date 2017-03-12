@@ -32,5 +32,6 @@ public:
 
 
 	void renderGlow(GLuint sceneTexture, GameObjectManager & glowObjects, Camera & camera);
+	GLuint getGlowTexture();
 };
 
