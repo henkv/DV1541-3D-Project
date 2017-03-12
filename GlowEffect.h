@@ -1,10 +1,15 @@
 #pragma once
 #include <glad\glad.h>
 #include "Shader.h"
+#include "GameObjectManager.h"
+#include "Camera.h"
+#include "FullscreenQuad.h"
 
 class GlowEffect
 {
 private:
+	FullscreenQuad fullscreenQuad;
+
 	Shader glowExtract;
 	Shader blurEffect;
 	Shader mergeShader;
@@ -12,18 +17,20 @@ private:
 	GLuint glowFramebuffer;
 	GLuint glowTexture;
 
-	enum BlurPass { HORIZONTAL, VERTICAL };
 	GLuint blurFramebuffers[2];
 	GLuint blurTextures[2];
-	BlurPass blurPass;
 
 	void createGlowBuffers(int width, int height);
 	void createBlurBuffers(int width, int height);
 
+	void renderGlowTexture(GameObjectManager & objects, Camera & camera);
+	void blurGlowTexutre();
+
 public:
-	GlowEffect();
+	GlowEffect(int width, int height);
 	~GlowEffect();
 
-	void renderGlowTexture()
+
+	void renderGlow(GLuint sceneTexture, GameObjectManager & glowObjects, Camera & camera);
 };
 

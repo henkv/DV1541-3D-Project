@@ -5,7 +5,7 @@
 
 using namespace glm;
 
-class FullscreenQuad : public GameObject
+class FullscreenQuad
 {
 private:
 	struct Vertex
@@ -21,8 +21,6 @@ public:
 	FullscreenQuad();
 	~FullscreenQuad();
 
-	// Inherited via GameObject
-	virtual void draw(Shader & shader) override;
-	virtual void update(float delta) override;
+	void draw();
 };
 

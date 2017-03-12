@@ -1,180 +1,163 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Classes">
-      <UniqueIdentifier>{561a8c9c-576b-417d-a01c-ced46bc6db83}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\Header Files">
-      <UniqueIdentifier>{8d68b2e6-3052-4687-ad8e-53f9e631ac6b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Classes\Source Files">
-      <UniqueIdentifier>{173b5af4-d743-4e9a-b33b-2393a02eb634}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Bloom">
-      <UniqueIdentifier>{e36bc5c5-0b16-450b-b196-7210fecbfda2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Resource Files\Blur">
-      <UniqueIdentifier>{ffbf19e6-a7f8-47c4-aa68-e12d100df6e8}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Classes\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Classes\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Classes\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Model.cpp">
-      <Filter>Classes\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Material.cpp">
-      <Filter>Classes\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="libs\glad-4.5-core\src\glad.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObjectManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="LightManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GameObject.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FullscreenQuad.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="DefferedRenderer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="FullscreenQuad.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObjectManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="libs\glad-4.5-core\src\glad.c">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="LightManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="GlowEffect.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Shader.h">
-      <Filter>Classes\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Window.h">
-      <Filter>Classes\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Material.h">
-      <Filter>Classes\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Classes\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Classes\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObjectManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="LightManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="UID.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="FullscreenQuad.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Observer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Subject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Header Files</Filter>
+      <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="DefferedRenderer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="FullscreenQuad.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObjectManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="LightManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Subject.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="UID.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="GlowEffect.h">
-      <Filter>Header Files</Filter>
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\BackfaceCulling.glsl">
-      <Filter>Resource Files</Filter>
+      <Filter>Shaders</Filter>
     </None>
-    <None Include="shaders\GeometryPass.frag">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="shaders\GeometryPass.vert">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="shaders\LightPass.frag">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="shaders\LightPass.vert">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="shaders\Phong.frag">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="shaders\Phong.vert">
-      <Filter>Resource Files</Filter>
     <None Include="shaders\bloom_fin_frag.glsl">
-      <Filter>Resource Files\Bloom</Filter>
+      <Filter>Shaders</Filter>
     </None>
     <None Include="shaders\bloom_light_frag.glsl">
-      <Filter>Resource Files\Bloom</Filter>
+      <Filter>Shaders</Filter>
     </None>
     <None Include="shaders\blur_frag.glsl">
-      <Filter>Resource Files\Blur</Filter>
+      <Filter>Shaders</Filter>
     </None>
     <None Include="shaders\blur_vertex.glsl">
-      <Filter>Resource Files\Blur</Filter>
-    </None>
-    <None Include="shaders\GeometryAndBloomShader.vert">
-      <Filter>Resource Files</Filter>
+      <Filter>Shaders</Filter>
     </None>
     <None Include="shaders\GeometryAndBloomShader.frag">
-      <Filter>Resource Files</Filter>
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\GeometryPass.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\GeometryPass.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\LightPass.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\LightPass.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\Phong.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\Phong.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\VertexShader.glsl">
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Arbetsuppdelning.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
+    <Text Include="Arbetsuppdelning.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{eacc170f-2e04-4305-b2bb-67d44a61b59a}</UniqueIdentifier>
+      <Extensions>.h</Extensions>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{4677a6ed-4670-43c6-a9b6-fb4cdf5c4309}</UniqueIdentifier>
+      <Extensions>.glsl,.frag,.geom,.vert</Extensions>
+    </Filter>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{3ce105be-2dfb-456e-8102-5dc8a595e644}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

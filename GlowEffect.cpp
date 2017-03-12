@@ -58,11 +58,78 @@ void GlowEffect::createBlurBuffers(int width, int height)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-GlowEffect::GlowEffect()
-{
-}
 
+GlowEffect::GlowEffect(int width, int height)
+	: glowExtract("shaders/GlowExtract.vert", "shaders/GlowExtract.frag")
+	, blurEffect("shaders/FullscreenQuad.vert", "shaders/BlurEffect.frag")
+	, mergeShader("shaders/FullscreenQuad.vert", "shaders/GlowMerge.frag")
+{
+	createGlowBuffers(width, height);
+	createBlurBuffers(width, height);
+}
 
 GlowEffect::~GlowEffect()
 {
+}
+
+void GlowEffect::renderGlow(GLuint sceneTexture, GameObjectManager & glowObjects, Camera & camera)
+{
+	renderGlowTexture(glowObjects, camera);
+	blurGlowTexutre();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	mergeShader.use();
+	mergeShader.setTexture2D(0, "scene", sceneTexture);
+	mergeShader.setTexture2D(1, "glow", glowTexture);
+
+	fullscreenQuad.draw();
+}
+
+void GlowEffect::renderGlowTexture(GameObjectManager & objects, Camera & camera)
+{
+	glBindFramebuffer(GL_FRAMEBUFFER, glowFramebuffer);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	glowExtract.use();
+	glowExtract.setUniform("viewMatrix", camera.getViewMatrix());
+	glowExtract.setUniform("projectionMatrix", camera.getProjectionMatrix());
+
+	objects.draw(glowExtract);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+}
+
+void GlowEffect::blurGlowTexutre()
+{
+	bool horizontalPass = true;
+	static int passes = 10;
+
+	blurEffect.use();
+
+	glBindFramebuffer(GL_FRAMEBUFFER, blurFramebuffers[!horizontalPass]);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	blurEffect.setUniform("horizontalPass", !horizontalPass);
+	blurEffect.setTexture2D(0, "glow", glowTexture);
+	fullscreenQuad.draw();
+
+	for (int i = 2; i < passes; i++)
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, blurFramebuffers[horizontalPass]);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		blurEffect.setUniform("horizontalPass", horizontalPass);
+		blurEffect.setTexture2D(0, "glow", blurTextures[!horizontalPass]);
+		horizontalPass = !horizontalPass;
+		fullscreenQuad.draw();
+	}
+
+	glBindFramebuffer(GL_FRAMEBUFFER, glowFramebuffer);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	blurEffect.setUniform("horizontalPass", horizontalPass);
+	blurEffect.setTexture2D(0, "glow", blurTextures[!horizontalPass]);
+	fullscreenQuad.draw();
 }

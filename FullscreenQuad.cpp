@@ -29,12 +29,8 @@ FullscreenQuad::~FullscreenQuad()
 {
 }
 
-void FullscreenQuad::draw(Shader & shader)
+void FullscreenQuad::draw()
 {
 	glBindVertexArray(vertexArray);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-}
-
-void FullscreenQuad::update(float delta)
-{
 }

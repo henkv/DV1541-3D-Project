@@ -88,7 +88,7 @@ int main()
 
 			merge(shaderBloomFin, blurShader, colorBuffers, blurColorbuffers);
 
-			window.swapBuffers();
+			window.swapBuffer();
 		}
 	}
 	catch (const char * message)
