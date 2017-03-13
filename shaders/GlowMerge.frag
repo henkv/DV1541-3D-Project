@@ -8,13 +8,13 @@ uniform sampler2D glow;
 
 void main()
 {
-	const float gamma = 3;
-	const float exposure = 1;
+	const float gamma = 2.0f;
+	const float exposure = 1.0f;
 
 	vec3 sceneColor = texture(scene, TexCoords).rgb;
 	vec3 glowColor = texture(glow, TexCoords).rgb;
 
-	vec3 result = vec3(1.0) - exp(-(sceneColor + glowColor) * exposure);	//tonemapping
+	vec3 result = vec3(1.0) - exp(-(sceneColor + glowColor * 0.25f) * exposure);	//tonemapping
 	result = pow(result, vec3(1.0 / gamma));	//gamma correct
 
 	Color = vec4(result, 1.0f);

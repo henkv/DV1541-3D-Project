@@ -11,7 +11,8 @@ private:
 	FullscreenQuad fullscreenQuad;
 
 	Shader glowExtract;
-	Shader blurEffect;
+	Shader blurEffectH;
+	Shader blurEffectV;
 	Shader mergeShader;
 
 	GLuint glowFramebuffer;
@@ -20,8 +21,12 @@ private:
 	GLuint blurFramebuffers[2];
 	GLuint blurTextures[2];
 
+	GLuint finalFramebuffer;
+	GLuint finalTexture;
+
 	void createGlowBuffers(int width, int height);
 	void createBlurBuffers(int width, int height);
+	void createFinalBuffers(int width, int height);
 
 	void renderGlowTexture(GameObjectManager & objects, Camera & camera);
 	void blurGlowTexutre();
@@ -32,6 +37,6 @@ public:
 
 
 	void renderGlow(GLuint sceneTexture, GameObjectManager & glowObjects, Camera & camera);
-	GLuint getGlowTexture();
+	GLuint getFinalTexture();
 };
 

@@ -200,12 +200,20 @@
   <ItemGroup>
     <None Include="shaders\bloom_fin_frag.glsl" />
     <None Include="shaders\bloom_light_frag.glsl" />
+    <None Include="shaders\BlurEffect.frag" />
     <None Include="shaders\blur_frag.glsl" />
     <None Include="shaders\blur_vertex.glsl" />
+    <None Include="shaders\brightnessFragmentShader.glsl" />
+    <None Include="shaders\FullscreenQuad.vert" />
+    <None Include="shaders\FullscreenTexture.frag" />
     <None Include="shaders\GeometryAndBloomShader.frag" />
     <None Include="shaders\BackfaceCulling.glsl" />
+    <None Include="shaders\GeometryAndBloomShader.vert" />
     <None Include="shaders\GeometryPass.frag" />
     <None Include="shaders\GeometryPass.vert" />
+    <None Include="shaders\GlowExtract.frag" />
+    <None Include="shaders\GlowExtract.vert" />
+    <None Include="shaders\GlowMerge.frag" />
     <None Include="shaders\LightPass.frag" />
     <None Include="shaders\LightPass.vert" />
     <None Include="shaders\Phong.frag" />

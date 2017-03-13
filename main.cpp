@@ -31,9 +31,9 @@ int main()
 		objectManager.add(&Model("models/manet.obj"));
 
 		LightManager lightManager;
-		lightManager.add(LightManager::Light( vec3(-10,   0, -10), vec3( 1, 0, 0) ));
-		lightManager.add(LightManager::Light( vec3( 10, -10, -10), vec3(.5, 1, 0) ));
-		lightManager.add(LightManager::Light( vec3(  0,  10,   0), vec3( 1, 1, 1) ));
+		lightManager.add(LightManager::Light( vec3(-10,   0, -10), vec3(  0, .5,  1) ));
+		lightManager.add(LightManager::Light( vec3( 10, -10, -10), vec3(  0,  1, .5) ));
+		lightManager.add(LightManager::Light( vec3(  0,  10,   0), vec3(  1,  1,  1) ));
 
 		DefferedRenderer defferedRenderer(WINDOW_WIDTH, WINDOW_HEIGHT);
 		GlowEffect glowEffect(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -48,7 +48,7 @@ int main()
 			camera.update(deltaTime);
 			defferedRenderer.renderScene(objectManager, lightManager, camera);
 			glowEffect.renderGlow(defferedRenderer.getFinalTexture(), objectManager, camera);
-			fullscreenQuad.drawTexture(glowEffect.getGlowTexture());
+			fullscreenQuad.drawTexture(glowEffect.getFinalTexture());
 
 			window.swapBuffer();
 		}

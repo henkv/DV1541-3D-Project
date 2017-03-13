@@ -18,8 +18,7 @@ void main()
 			result += texture(glow, TexCoords + vec2(texOffset.x * i, 0.0)).rgb * weight[i];
 			result += texture(glow, TexCoords - vec2(texOffset.x * i, 0.0)).rgb * weight[i];
 		}
-	}
-	else {
+	}	else {
 		for(int i = 1; i < 5; ++i) {
 			result += texture(glow, TexCoords + vec2(texOffset.y * i, 0.0)).rgb * weight[i];
 			result += texture(glow, TexCoords - vec2(texOffset.y * i, 0.0)).rgb * weight[i];

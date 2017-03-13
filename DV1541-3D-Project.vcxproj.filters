@@ -143,6 +143,30 @@
     <None Include="shaders\VertexShader.glsl">
       <Filter>Shaders</Filter>
     </None>
+    <None Include="shaders\BlurEffect.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\brightnessFragmentShader.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\FullscreenQuad.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\FullscreenTexture.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\GeometryAndBloomShader.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\GlowExtract.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\GlowExtract.vert">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\GlowMerge.frag">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Arbetsuppdelning.txt" />
