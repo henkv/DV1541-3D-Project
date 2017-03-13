@@ -1,5 +1,6 @@
 #include "Shader.h"
 #include <fstream>
+#include <stdio.h>
 #include <glm\gtc\type_ptr.hpp>
 
 GLuint Shader::activeProgram = GL_NONE;
@@ -110,8 +111,9 @@ GLint Shader::getUniform(const GLchar * name)
 		throw "cant get uniform, shader not active";
 
 	GLint location = glGetUniformLocation(program, name);
+
 	if (location == -1)
-		throw "cant find uniform, name not defined";
+		printf("cant find uniform '%s' in shader nr %d", name, program);
 
 	return location;
 }

@@ -18,7 +18,7 @@ int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
-	/*/
+	//*/
 	try {
 	//*/
 		Window window = { "DV1541 3D Project", WINDOW_WIDTH, WINDOW_HEIGHT };
@@ -52,7 +52,7 @@ int main()
 
 			window.swapBuffer();
 		}
-	/*/
+	//*/
 	}
 	catch (const char * message) {
 		printf("Error: %s", message);
