@@ -175,6 +175,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="FullscreenQuad.cpp" />
+    <ClCompile Include="OBJParser.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="ShadowMap.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="GameObjectManager.h" />
     <ClInclude Include="FullscreenQuad.h" />
+    <ClInclude Include="OBJParser.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderManager.h" />
