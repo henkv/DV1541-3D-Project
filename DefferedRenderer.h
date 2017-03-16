@@ -5,6 +5,7 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "FullscreenQuad.h"
+#include "ShadowMap.h"
 
 class DefferedRenderer
 {
@@ -13,6 +14,8 @@ private:
 
 	Shader geometryShader;
 	Shader lightShader;
+
+	ShadowMap sunShadowMap;
 
 	GLuint geometryFramebuffer;
 	GLuint positionsTexture;

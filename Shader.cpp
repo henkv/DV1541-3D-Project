@@ -113,7 +113,7 @@ GLint Shader::getUniform(const GLchar * name)
 	GLint location = glGetUniformLocation(program, name);
 
 	if (location == -1)
-		printf("cant find uniform '%s' in shader nr %d", name, program);
+		printf("cant find uniform '%s' in shader nr %d\n", name, program);
 
 	return location;
 }

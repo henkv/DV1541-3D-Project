@@ -16,6 +16,6 @@ OK	o Back face culling using Geometry Shader
 OK	o Glow-effect
 
 Walter
-	o Shadow mapping
+OK	o Shadow mapping
 	o View frustum culling against a quadtree
 	o Gaussian filter

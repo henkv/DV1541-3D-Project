@@ -28,9 +28,6 @@
     <ClCompile Include="LightManager.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Material.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -51,6 +48,13 @@
     </ClCompile>
     <ClCompile Include="FullscreenQuad.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ShadowMap.cpp">
+      <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -107,6 +111,12 @@
     </ClInclude>
     <ClInclude Include="FullscreenQuad.h">
       <Filter>Classes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowMap.h">
+      <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -173,23 +183,11 @@
     <None Include="shaders\GlowMerge.frag">
       <Filter>Shaders</Filter>
     </None>
-    <None Include="shaders\ShadowVertexShader.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="shaders\ShadowFramentShader.glsl">
-      <Filter>Resource Files</Filter>
+    <None Include="shaders\WFragmentShader2Pass.glsl">
+      <Filter>Shaders</Filter>
     </None>
     <None Include="shaders\WVertexShader2Pass.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="shaders\WFragmentShader2Pass.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="shaders\FullFragment.glsl">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="shaders\FullVertex.glsl">
-      <Filter>Resource Files</Filter>
+      <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

@@ -176,6 +176,8 @@
     <ClCompile Include="GameObjectManager.cpp" />
     <ClCompile Include="FullscreenQuad.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShaderManager.cpp" />
+    <ClCompile Include="ShadowMap.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -193,6 +195,8 @@
     <ClInclude Include="FullscreenQuad.h" />
     <ClInclude Include="Observer.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShaderManager.h" />
+    <ClInclude Include="ShadowMap.h" />
     <ClInclude Include="Subject.h" />
     <ClInclude Include="UID.h" />
     <ClInclude Include="Window.h" />
