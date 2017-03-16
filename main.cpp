@@ -33,9 +33,9 @@ int main()
 		objectManager.add(&Model("models/planeBig8.obj"));
 
 		LightManager lightManager;
-		lightManager.add(LightManager::Light(vec3(-10, 0, -10), vec3(0, .5, 1)));
-		lightManager.add(LightManager::Light(vec3(10, -10, -10), vec3(0, 1, .5)));
-		lightManager.add(LightManager::Light(vec3(0, 10, 0), vec3(1, 1, 1)));
+		//lightManager.add(LightManager::Light(vec3(-10,   0, -10), vec3(0, .5,  1)));
+		//lightManager.add(LightManager::Light(vec3( 10, -10, -10), vec3(0,  1, .5)));
+		//lightManager.add(LightManager::Light(vec3(  0,  10,   0), vec3(1,  1,  1)));
 
 
 		DefferedRenderer defferedRenderer(WINDOW_WIDTH, WINDOW_HEIGHT);
