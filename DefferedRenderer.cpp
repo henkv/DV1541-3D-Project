@@ -4,6 +4,7 @@
 DefferedRenderer::DefferedRenderer(int width, int height)
 	: geometryShader("shaders/GeometryPass.vert", "shaders/GeometryPass.frag")
 	, lightShader("shaders/LightPass.vert", "shaders/LightPass.frag")
+	, sunShadowMap(width, height)
 {
 	createGeometryBuffers(width, height);
 	createFinalBuffers(width, height);
@@ -86,6 +87,8 @@ void DefferedRenderer::createFinalBuffers(int width, int height)
 
 void DefferedRenderer::geometryPass(Camera & camera, GameObjectManager & gameObjects)
 {
+	sunShadowMap.renderShadowMap(gameObjects);
+
 	glBindFramebuffer(GL_FRAMEBUFFER, geometryFramebuffer);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -109,6 +112,11 @@ void DefferedRenderer::lightPass(Camera & camera, LightManager & lights)
 	lightShader.setTexture2D(0, "Positions", positionsTexture);
 	lightShader.setTexture2D(1, "Normals", normalsTexture);
 	lightShader.setTexture2D(2, "ColorSpecs", colorsTexture);
+
+	lightShader.setUniform("sunColor", vec3(1.0, 1.0, 1.0));
+	lightShader.setUniform("sunDirection", sunShadowMap.getLightDirection());
+	lightShader.setUniform("sunLightSpaceMatrix", sunShadowMap.getLightSpaceMatrix());
+	lightShader.setTexture2D(3, "sunShadowMap", sunShadowMap.getShadowMapTexture());
 
 	fullscreenQuad.draw();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);

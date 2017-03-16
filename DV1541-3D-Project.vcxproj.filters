@@ -28,9 +28,6 @@
     <ClCompile Include="LightManager.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Material.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -47,6 +44,16 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="GlowEffect.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="FullscreenQuad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ShaderManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="ShadowMap.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -100,6 +107,15 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="GlowEffect.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="FullscreenQuad.h">
+      <Filter>Classes\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ShaderManager.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowMap.h">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -165,6 +181,12 @@
       <Filter>Shaders</Filter>
     </None>
     <None Include="shaders\GlowMerge.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\WFragmentShader2Pass.glsl">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shaders\WVertexShader2Pass.glsl">
       <Filter>Shaders</Filter>
     </None>
   </ItemGroup>
