@@ -8,11 +8,13 @@ layout(location = 0) out vec3 Position;
 layout(location = 1) out vec3 Normal;
 layout(location = 2) out vec4 ColorSpec;
 
+uniform sampler2D diffuseMap;
+
 void main()
 {
 	Position = FragmentPosition;
 	Normal = FragmentNormal;
 
 	float x = length(Position);
-	ColorSpec = vec4(1,1,1,1);
+	ColorSpec = vec4(texture(diffuseMap, FragmentTexCoord).rgb, 1);
 }

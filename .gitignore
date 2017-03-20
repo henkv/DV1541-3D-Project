@@ -243,3 +243,4 @@ ModelManifest.xml
 
 # Spare libs folder
 !libs/**
+!models/**

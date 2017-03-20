@@ -19,10 +19,10 @@ FullscreenQuad::FullscreenQuad()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, position));
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, Vertex::VertexSize, Vertex::PositionOffset);
 
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, uv));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, Vertex::VertexSize, Vertex::TexCoordOffset);
 }
 
 FullscreenQuad::~FullscreenQuad()
@@ -39,8 +39,5 @@ void FullscreenQuad::drawTexture(GLuint texture)
 {
 	textureShader.use();
 	textureShader.setTexture2D(0, "fullscreenTexture", texture);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	draw();
 }
