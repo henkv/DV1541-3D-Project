@@ -122,8 +122,14 @@ void DefferedRenderer::lightPass(Camera & camera, LightManager & lights)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
+void DefferedRenderer::frontToBackSort(Camera & camera, GameObjectManager & gameObjects)
+{
+
+}
+
 void DefferedRenderer::renderScene(GameObjectManager & gameObjects, LightManager & lights, Camera & camera)
 {
+	frontToBackSort(camera, gameObjects);
 	geometryPass(camera, gameObjects);
 	lightPass(camera, lights);
 }
