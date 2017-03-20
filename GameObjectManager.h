@@ -1,5 +1,5 @@
 #pragma once
-#include <map>
+#include <vector>
 #include "GameObject.h"
 #include "Camera.h"
 #include "Model.h"
@@ -12,6 +12,7 @@ private:
 
 	//help
 	bool sort(Camera & camera, GameObject* objectLeft, GameObject* objectRight);
+	std::vector<GameObject*> objects;
 public:
 	GameObjectManager();
 	~GameObjectManager();
