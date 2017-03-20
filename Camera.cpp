@@ -96,11 +96,11 @@ void Camera::rotate(float deltaYaw, float deltaPitch)
 void Camera::update(float delta)
 {
 	rotate(
-		delta * Input::getKey(Input::KEY_E) -
-		delta * Input::getKey(Input::KEY_Q)
+		delta * Input::getKey(Input::KEY_RIGHT) -
+		delta * Input::getKey(Input::KEY_LEFT)
 	, 
-		delta * Input::getKey(Input::KEY_T) -
-		delta * Input::getKey(Input::KEY_G)
+		delta * Input::getKey(Input::KEY_UP) -
+		delta * Input::getKey(Input::KEY_DOWN)
 	);
 
 	vec3 deltaMove(0, 0, 0);
@@ -109,8 +109,8 @@ void Camera::update(float delta)
 	deltaMove.z -= Input::getKey(Input::KEY_S) * delta * 2;
 	deltaMove.x -= Input::getKey(Input::KEY_D) * delta * 2;
 
-	deltaMove.y += Input::getKey(Input::KEY_R) * delta * 2;
-	deltaMove.y -= Input::getKey(Input::KEY_F) * delta * 2;
+	deltaMove.y += Input::getKey(Input::KEY_SPACE) * delta * 2;
+	deltaMove.y -= Input::getKey(Input::KEY_LEFT_CONTROL) * delta * 2;
 
 	move(deltaMove);
 }

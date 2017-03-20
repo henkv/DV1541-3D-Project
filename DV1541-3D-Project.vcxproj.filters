@@ -56,7 +56,14 @@
     <ClCompile Include="ShadowMap.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="OBJParser.cpp" />
+    <ClCompile Include="Vertex.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjFile.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="MtlFile.cpp" />
+    <ClCompile Include="FileLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -119,7 +126,14 @@
     <ClInclude Include="ShadowMap.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="OBJParser.h" />
+    <ClInclude Include="Vertex.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjFile.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="MtlFile.h" />
+    <ClInclude Include="FileLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\BackfaceCulling.glsl">

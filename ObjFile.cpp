@@ -1,23 +1,49 @@
-#include "OBJParser.h"
+#include "ObjFile.h"
 
 
-void OBJParser::parseObjFile(const char * filePath)
+ObjFile::ObjFile(std::string filePath)
 {
-	points.clear();
-	uvs.clear();
-	normals.clear();
-	vertices.clear();
-
+	folder = filePath.substr(0, filePath.find_last_of('/'));
 	std::ifstream objContent(filePath);
 	std::string line;
 
-	if (std::getline(objContent, line))
+	if (!objContent)
+		throw "file does not exist";
+
+	while (std::getline(objContent, line))
 		parseObjLine(line);
 
 	objContent.close();
 }
 
-void OBJParser::parseObjLine(std::string line)
+ObjFile::~ObjFile()
+{
+}
+
+
+
+Mesh ObjFile::getMesh()
+{
+	std::vector<Vertex> vertexVector;
+
+	for (ivec3 & v : vertices)
+	{
+		vertexVector.push_back({
+			points[v.x - 1],
+			uvs[v.y - 1],
+			normals[v.z - 1]
+		});
+	}
+
+	return Mesh(vertexVector);
+}
+
+std::string ObjFile::getMtlPath()
+{
+	return folder.size() > 0 ? folder + '/' + mtllib : mtllib;
+}
+
+void ObjFile::parseObjLine(std::string line)
 {
 	std::stringstream lineStream(line);
 	std::string linePart;
@@ -27,11 +53,16 @@ void OBJParser::parseObjLine(std::string line)
 		if (linePart == "v") parsePoint(lineStream);
 		else if (linePart == "vt") parseUV(lineStream);
 		else if (linePart == "vn") parseNormal(lineStream);
-		else if (linePart == "f") parseFace(lineStream);
+		else if (linePart == "f") parseVertex(lineStream);
+		else if (linePart == "mtllib")
+		{
+			std::getline(lineStream, linePart);
+			mtllib = linePart;
+		}
 	}
 }
 
-void OBJParser::parsePoint(std::stringstream & stream)
+void ObjFile::parsePoint(std::stringstream & stream)
 {
 	std::string part;
 	glm::vec3 point;
@@ -46,7 +77,7 @@ void OBJParser::parsePoint(std::stringstream & stream)
 	points.push_back(point);
 }
 
-void OBJParser::parseUV(std::stringstream & stream)
+void ObjFile::parseUV(std::stringstream & stream)
 {
 	std::string part;
 	glm::vec2 uv;
@@ -59,7 +90,7 @@ void OBJParser::parseUV(std::stringstream & stream)
 	uvs.push_back(uv);
 }
 
-void OBJParser::parseNormal(std::stringstream & stream)
+void ObjFile::parseNormal(std::stringstream & stream)
 {
 	std::string part;
 	glm::vec3 normal;
@@ -74,32 +105,23 @@ void OBJParser::parseNormal(std::stringstream & stream)
 	normals.push_back(normal);
 }
 
-void OBJParser::parseFace(std::stringstream & stream)
+void ObjFile::parseVertex(std::stringstream & stream)
 {
 	std::string part;
 
-	while (getline(stream, part))
+	while (getline(stream, part, ' '))
 	{
 		std::stringstream partStream(part);
 		std::string subPart;
 		glm::ivec3 vertex;
 
 		getline(partStream, subPart, '/');
-		vertex.x = std::stof(part);
+		vertex.x = std::stoi(subPart);
 		getline(partStream, subPart, '/');
-		vertex.y = std::stof(part);
+		vertex.y = std::stoi(subPart);
 		getline(partStream, subPart, ' ');
-		vertex.z = std::stof(part);
+		vertex.z = std::stoi(subPart);
 
 		vertices.push_back(vertex);
 	}	
-}
-
-OBJParser::OBJParser()
-{
-}
-
-
-OBJParser::~OBJParser()
-{
 }
