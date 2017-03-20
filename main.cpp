@@ -17,9 +17,6 @@ const size_t WINDOW_HEIGHT = 600;
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-
-
-
 //*/
 	try {
 //*/
@@ -39,7 +36,7 @@ int main()
 		scene.add(&floor);
 		scene.add(&planet);
 
-		floor.move({ 0, -3, 0 });		
+		floor.move({ 0, -3, 0 });
 
 		LightManager lightManager;
 		lightManager.add(LightManager::Light(vec3(-3, 0, 0), vec3(1, 0, 0)));
@@ -66,7 +63,7 @@ int main()
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			fullscreenQuad.drawTexture(glowEffect.getFinalTexture());
-			
+
 			window.swapBuffer();
 		}
 //*/
