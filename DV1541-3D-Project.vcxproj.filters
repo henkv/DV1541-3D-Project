@@ -59,8 +59,12 @@
     <ClCompile Include="ObjFile.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="MtlFile.cpp" />
-    <ClCompile Include="FileLoader.cpp" />
+    <ClCompile Include="MtlFile.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="FileLoader.cpp">
+      <Filter>Headers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -117,8 +121,12 @@
     <ClInclude Include="ObjFile.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="MtlFile.h" />
-    <ClInclude Include="FileLoader.h" />
+    <ClInclude Include="MtlFile.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="FileLoader.h">
+      <Filter>Sources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\BackfaceCulling.glsl">
