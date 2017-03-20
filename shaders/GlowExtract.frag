@@ -6,7 +6,9 @@ layout(location = 2) in vec3 FragmentNormal;
 
 layout(location = 0) out vec4 Glow;
 
+uniform sampler2D diffuseMap;
+
 void main()
 {
-	Glow = vec4(1);
+	Glow = vec4(texture(diffuseMap, FragmentTexCoord).a);
 }

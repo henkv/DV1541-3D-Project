@@ -3,21 +3,22 @@
 #include <glm\gtc\matrix_transform.hpp>
 
 #include "Window.h"
-#include "Model.h"
 #include "Camera.h"
 #include "GameObjectManager.h"
 #include "LightManager.h"
 #include "FullscreenQuad.h"
 #include "DefferedRenderer.h"
 #include "GlowEffect.h"
+#include "FileLoader.h"
 
 const size_t WINDOW_WIDTH = 800;
 const size_t WINDOW_HEIGHT = 600;
 
-
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
+
 
 //*/
 	try {
@@ -28,13 +29,24 @@ int main()
 
 		FullscreenQuad fullscreenQuad;
 
-		GameObjectManager objectManager;
-		objectManager.add(&Model("models/manet.obj"));
+		GameObjectManager scene;
+
+		Model manet = FileLoader::loadObj("models/manet.obj");
+		Model floor = FileLoader::loadObj("models/floor_final.obj");
+		Model planet = FileLoader::loadObj("models/planet.obj");
+
+		scene.add(&manet);
+		scene.add(&floor);
+		scene.add(&planet);
+
+		planet.move({ -2, 1, 0 });
+		floor.move({ 0, -3, 0 });
+
+		
 
 		LightManager lightManager;
-		//lightManager.add(LightManager::Light(vec3(-10,   0, -10), vec3(0, .5,  1)));
-		//lightManager.add(LightManager::Light(vec3( 10, -10, -10), vec3(0,  1, .5)));
-		//lightManager.add(LightManager::Light(vec3(  0,  10,   0), vec3(1,  1,  1)));
+		lightManager.add(LightManager::Light(vec3(-3, 0, 0), vec3(1, 0, 0)));
+		lightManager.add(LightManager::Light(vec3(3, 0, -0), vec3(0, 1, 0)));
 
 
 		DefferedRenderer defferedRenderer(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -48,12 +60,16 @@ int main()
 			deltaTime = window.getTime() - prevFrame;
 			prevFrame = window.getTime();
 
+			planet.setPosition(vec3(cosf(window.getTime()), 0.0f, sinf(window.getTime()))* 3.0f);
+			manet.setPosition(vec3(0.0f, cosf(window.getTime()), 0.0f));
+
 			camera.update(deltaTime);
 
-			defferedRenderer.renderScene(objectManager, lightManager, camera);
+			defferedRenderer.renderScene(scene, lightManager, camera);
+			glowEffect.renderGlow(defferedRenderer.getFinalTexture(), scene, camera);
 
-			glowEffect.renderGlow(defferedRenderer.getFinalTexture(), objectManager, camera);
-
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 			fullscreenQuad.drawTexture(glowEffect.getFinalTexture());
 			
 			window.swapBuffer();
