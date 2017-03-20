@@ -21,6 +21,28 @@ void GameObjectManager::remove(uid_t objectId)
 	objects.erase(objects.find(objectId));
 }
 
+int GameObjectManager::size()
+{
+	int result = 0;
+	for (auto &object : objects)
+	{
+		result++;
+	}
+	return result;
+}
+
+GameObject * GameObjectManager::getObjectPointer(int id)
+{
+	GameObject * targetObject = nullptr;
+	targetObject = objects.at(id);
+	return targetObject;
+}
+
+void GameObjectManager::setObjectPointer(int id, GameObject * object)
+{
+	objects.at(id) = object;
+}
+
 void GameObjectManager::update(float delta)
 {
 	for (auto &object : objects)

@@ -6,7 +6,6 @@
 #include "Camera.h"
 #include "FullscreenQuad.h"
 #include "ShadowMap.h"
-#include "FrontToBack.h"
 
 class DefferedRenderer
 {
