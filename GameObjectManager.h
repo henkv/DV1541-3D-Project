@@ -1,18 +1,16 @@
 #pragma once
-#include <map>
+#include <vector>
 #include "GameObject.h"
 
 class GameObjectManager : GameObject
 {
 private:
-	typedef std::map<uid_t, GameObject*> map_t;
-	map_t objects;
+	std::vector<GameObject*> objects;
 public:
 	GameObjectManager();
 	~GameObjectManager();
 
 	void add(GameObject* object);
-	void remove(uid_t objectId);
 
 	// Inherited via GameObject
 	virtual void draw(Shader & shader) override;

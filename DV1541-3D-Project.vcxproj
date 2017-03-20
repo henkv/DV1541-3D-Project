@@ -179,7 +179,6 @@
     <ClCompile Include="MtlFile.cpp" />
     <ClCompile Include="ObjFile.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="ShaderManager.cpp" />
     <ClCompile Include="ShadowMap.cpp" />
     <ClCompile Include="Vertex.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -200,12 +199,8 @@
     <ClInclude Include="FullscreenQuad.h" />
     <ClInclude Include="MtlFile.h" />
     <ClInclude Include="ObjFile.h" />
-    <ClInclude Include="Observer.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="ShaderManager.h" />
     <ClInclude Include="ShadowMap.h" />
-    <ClInclude Include="Subject.h" />
-    <ClInclude Include="UID.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
