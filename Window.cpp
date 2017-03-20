@@ -1,12 +1,12 @@
 #include "Window.h"
 #include <stdio.h>
 
-void Window::CallbackHandler::error(int error, const char * message)
+void Window::error(int error, const char * message)
 {
 	throw message;
 }
 
-void Window::CallbackHandler::key(GLFWwindow * window, int key, int scancode, int action, int mods)
+void Window::key(GLFWwindow * window, int key, int scancode, int action, int mods)
 {
 	if (key != -1)
 	{
@@ -21,37 +21,12 @@ void Window::CallbackHandler::key(GLFWwindow * window, int key, int scancode, in
 	}
 }
 
-void Window::CallbackHandler::subscribe(GLFWwindow * window, Window * windowObj)
-{
-	//windows.insert(std::make_pair(window, windowObj));
-	glfwSetKeyCallback(window, key);
-}
-
-void Window::CallbackHandler::unsubscribe(GLFWwindow * window)
-{
-	//windows.erase(windows.find(window));
-	glfwSetKeyCallback(window, NULL);
-}
-
-
-Window::CallbackHandler::CallbackHandler()
-{
-	static bool first = true;
-	if (first)
-	{
-		glfwSetErrorCallback(error);
-		first = false;
-		windows = {};
-	}
-}
-
-
-Window::CallbackHandler Window::callbacks = {};
 int Window::nrOfWindows = 0;
-
 
 Window::Window(const char * title, size_t width, size_t height)
 {
+	static void *e = glfwSetErrorCallback(error);
+
 	if (nrOfWindows == 0 && !glfwInit())
 		throw "failed to init glfw";
 	
@@ -71,14 +46,14 @@ Window::Window(const char * title, size_t width, size_t height)
 	glEnable(GL_DEPTH_TEST);
 
 	nrOfWindows++;
-	callbacks.subscribe(window, this);
+	glfwSetKeyCallback(window, key);
 }
 
 Window::~Window()
 {
+	glfwSetKeyCallback(window, NULL);
 	glfwDestroyWindow(window);
 	nrOfWindows--;
-	callbacks.unsubscribe(window);
 
 	if (nrOfWindows == 0)
 		glfwTerminate();
@@ -89,19 +64,9 @@ void Window::use()
 	glfwMakeContextCurrent(window);
 }
 
-void Window::clearBuffer()
-{
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
 bool Window::isOpen()
 {
 	return !glfwWindowShouldClose(window);
-}
-
-bool Window::getKey(int key)
-{
-	return glfwGetKey(window, key);
 }
 
 void Window::swapBuffer()

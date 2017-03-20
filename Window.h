@@ -7,18 +7,8 @@
 class Window
 {
 private:
-	static class CallbackHandler
-	{
-	public:
-		static void error(int error, const char * message);
-		static void key(GLFWwindow* window, int key, int scancode, int action, int mods);
-
-		std::map<GLFWwindow*, Window*> windows;
-		void subscribe(GLFWwindow* window, Window* windowObj);
-		void unsubscribe(GLFWwindow* window);
-
-		CallbackHandler();
-	} callbacks;
+	static void error(int error, const char * message);
+	static void key(GLFWwindow* window, int key, int scancode, int action, int mods);
 
 	static int nrOfWindows;
 	GLFWwindow * window;
@@ -29,12 +19,9 @@ public:
 	~Window();
 
 	void use();
-	void clearBuffer();
 	void swapBuffer();
 
 	bool isOpen();
-	bool getKey(int key);
-
 
 	static void pollEvents();
 	static double getTime();
