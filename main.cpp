@@ -39,22 +39,17 @@ int main()
 		scene.add(&floor);
 		scene.add(&planet);
 
-		planet.move({ -2, 1, 0 });
-		floor.move({ 0, -3, 0 });
-
-		
+		floor.move({ 0, -3, 0 });		
 
 		LightManager lightManager;
 		lightManager.add(LightManager::Light(vec3(-3, 0, 0), vec3(1, 0, 0)));
 		lightManager.add(LightManager::Light(vec3(3, 0, -0), vec3(0, 1, 0)));
 
-
 		DefferedRenderer defferedRenderer(WINDOW_WIDTH, WINDOW_HEIGHT);
 		GlowEffect glowEffect(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-
-		float prevFrame = window.getTime();
-		float deltaTime = window.getTime();
+		float prevFrame = 0;
+		float deltaTime = 0;
 		while (window.isOpen()) {
 			window.pollEvents();
 			deltaTime = window.getTime() - prevFrame;
