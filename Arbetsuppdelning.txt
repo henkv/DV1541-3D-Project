@@ -7,7 +7,7 @@
 
 Henrik
 OK	o Deferred Rendering
-	o Parsing and rendering an existing model format
+OK	o Parsing and rendering an existing model format
 	o Displacement mapping using Tessellation hardware
 
 Hannah
