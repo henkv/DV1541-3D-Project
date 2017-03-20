@@ -30,6 +30,7 @@ int main()
 
 		GameObjectManager objectManager;
 		objectManager.add(&Model("models/manet.obj"));
+		objectManager.add(&Model("models/"))
 
 		LightManager lightManager;
 		lightManager.add(LightManager::Light(vec3(-10, 0, -10), vec3(0, .5, 1)));

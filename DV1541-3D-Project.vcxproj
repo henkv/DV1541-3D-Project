@@ -163,6 +163,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="DefferedRenderer.cpp" />
+    <ClCompile Include="FrontToBack.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GlowEffect.cpp" />
     <ClCompile Include="Input.cpp" />
@@ -183,6 +184,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="DefferedRenderer.h" />
+    <ClInclude Include="FrontToBack.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GlowEffect.h" />
     <ClInclude Include="Input.h" />
