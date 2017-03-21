@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "FullscreenQuad.h"
 #include "ShadowMap.h"
+#include "SSAO.h"
 
 class DefferedRenderer
 {
@@ -16,11 +17,13 @@ private:
 	Shader lightShader;
 
 	ShadowMap sunShadowMap;
+	SSAO ssao;
 
 	GLuint geometryFramebuffer;
 	GLuint positionsTexture;
 	GLuint normalsTexture;
 	GLuint colorsTexture;
+	GLuint viewPositionsTexture;
 
 	GLuint finalFramebuffer;
 	GLuint finalTexture;

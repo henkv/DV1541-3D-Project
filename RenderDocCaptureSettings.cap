@@ -15,7 +15,7 @@
     <DebugOutputMute>true</DebugOutputMute>
   </Options>
   <Inject>false</Inject>
-  <AutoStart>false</AutoStart>
+  <AutoStart>true</AutoStart>
   <Executable>C:\Users\henkv\Documents\GitHub\DV1541-3D-Project\x64\Debug\DV1541-3D-Project.exe</Executable>
   <WorkingDir>C:\Users\henkv\Documents\GitHub\DV1541-3D-Project</WorkingDir>
   <CmdLine />

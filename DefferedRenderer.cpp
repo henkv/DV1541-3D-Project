@@ -5,6 +5,7 @@ DefferedRenderer::DefferedRenderer(int width, int height)
 	: geometryShader("shaders/GeometryPass.vert", "shaders/GeometryPass.frag")
 	, lightShader("shaders/LightPass.vert", "shaders/LightPass.frag")
 	, sunShadowMap(width, height)
+	, ssao(width, height)
 {
 	createGeometryBuffers(width, height);
 	createFinalBuffers(width, height);
@@ -25,6 +26,8 @@ GLuint DefferedRenderer::generateVec3Texture(int width, int height)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB16F, width, height, 0, GL_RGB, GL_FLOAT, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	return texture;
 }
 
@@ -47,13 +50,15 @@ void DefferedRenderer::createGeometryBuffers(int width, int height)
 	positionsTexture = generateVec3Texture(width, height);
 	normalsTexture = generateVec3Texture(width, height);
 	colorsTexture = generateColorTexture(width, height);
+	viewPositionsTexture = generateVec3Texture(width, height);
 
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, positionsTexture, 0);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, normalsTexture, 0);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, colorsTexture, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT3, GL_TEXTURE_2D, viewPositionsTexture, 0);
 
-	GLuint attachments[3] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2 };
-	glDrawBuffers(3, attachments);
+	GLuint attachments[] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
+	glDrawBuffers(4, attachments);
 
 	GLuint depthBuffer;
 	glGenRenderbuffers(1, &depthBuffer);
@@ -103,6 +108,8 @@ void DefferedRenderer::geometryPass(Camera & camera, GameObjectManager & gameObj
 
 void DefferedRenderer::lightPass(Camera & camera, LightManager & lights)
 {
+	ssao.render(camera, viewPositionsTexture);
+
 	glBindFramebuffer(GL_FRAMEBUFFER, finalFramebuffer);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -112,11 +119,12 @@ void DefferedRenderer::lightPass(Camera & camera, LightManager & lights)
 	lightShader.setTexture2D(0, "Positions", positionsTexture);
 	lightShader.setTexture2D(1, "Normals", normalsTexture);
 	lightShader.setTexture2D(2, "ColorSpecs", colorsTexture);
+	lightShader.setTexture2D(3, "SSAOMap", ssao.getSsaoMap());
+	lightShader.setTexture2D(4, "sunShadowMap", sunShadowMap.getShadowMapTexture());
 
 	lightShader.setUniform("sunColor", vec3(1.0, 1.0, 1.0));
 	lightShader.setUniform("sunDirection", sunShadowMap.getLightDirection());
 	lightShader.setUniform("sunLightSpaceMatrix", sunShadowMap.getLightSpaceMatrix());
-	lightShader.setTexture2D(3, "sunShadowMap", sunShadowMap.getShadowMapTexture());
 
 	fullscreenQuad.draw();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
