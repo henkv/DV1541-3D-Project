@@ -10,5 +10,6 @@ uniform sampler2D diffuseMap;
 
 void main()
 {
-	Glow = vec4(texture(diffuseMap, FragmentTexCoord).a);
+	vec4 color = texture(diffuseMap, FragmentTexCoord);
+	Glow = vec4(color * color.a);
 }

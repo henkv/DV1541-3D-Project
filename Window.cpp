@@ -1,6 +1,22 @@
 #include "Window.h"
 #include <stdio.h>
 
+void Window::mouseButton(GLFWwindow * window, int button, int action, int mods)
+{
+	Input::setMouseButton((Input::Mouse)button, action == GLFW_PRESS);
+}
+
+void Window::mouseMove(GLFWwindow * window, double xpos, double ypos)
+{
+	int height, width;
+	glfwGetWindowSize(window, &height, &width);
+
+	float x = (xpos / (float)width) * 2.0 - 1;
+	float y = (ypos / (float)height) * 2.0 - 1;
+
+	Input::setMousePos(x, y);
+}
+
 void Window::error(int error, const char * message)
 {
 	throw message;
@@ -47,11 +63,12 @@ Window::Window(const char * title, size_t width, size_t height)
 
 	nrOfWindows++;
 	glfwSetKeyCallback(window, key);
+	glfwSetCursorPosCallback(window, mouseMove);
+	glfwSetMouseButtonCallback(window, mouseButton);
 }
 
 Window::~Window()
 {
-	glfwSetKeyCallback(window, NULL);
 	glfwDestroyWindow(window);
 	nrOfWindows--;
 

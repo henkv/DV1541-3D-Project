@@ -4,11 +4,14 @@
 #include "GameObjectManager.h"
 #include "Camera.h"
 #include "FullscreenQuad.h"
+#include "GaussianBlur.h"
 
 class GlowEffect
 {
 private:
 	FullscreenQuad fullscreenQuad;
+
+	GaussianBlur gaussianBlur;
 
 	Shader glowExtract;
 	Shader blurEffectH;

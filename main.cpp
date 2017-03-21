@@ -17,7 +17,7 @@ const size_t WINDOW_HEIGHT = 600;
 int main()
 {
 	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-//*/
+/*/
 	try {
 //*/
 		Window window = { "DV1541 3D Project", WINDOW_WIDTH, WINDOW_HEIGHT };
@@ -25,15 +25,18 @@ int main()
 		Shader phongShader("shaders/Phong.vert", "shaders/Phong.frag");
 
 		FullscreenQuad fullscreenQuad;
+		GaussianBlur gaussianBlur(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 		GameObjectManager scene;
 
 		Model manet = FileLoader::loadObj("models/manet.obj");
 		Model floor = FileLoader::loadObj("models/floor_final.obj");
+		Model sun = FileLoader::loadObj("models/sun.obj");
 		Model planet = FileLoader::loadObj("models/planet.obj");
 
 		scene.add(&manet);
 		scene.add(&floor);
+		scene.add(&sun);
 		scene.add(&planet);
 
 		floor.move({ 0, -3, 0 });
@@ -52,21 +55,22 @@ int main()
 			deltaTime = window.getTime() - prevFrame;
 			prevFrame = window.getTime();
 
-			planet.setPosition(vec3(cosf(window.getTime()), 0.0f, sinf(window.getTime()))* 3.0f);
-			manet.setPosition(vec3(0.0f, cosf(window.getTime()), 0.0f));
+			//sun.setPosition(vec3(cosf(prevFrame), 0.0f, sinf(prevFrame))* 3.0f);
+			planet.setPosition(vec3(cosf(prevFrame), 0, sinf(prevFrame)) * 2.5f);
+			manet.setPosition(vec3(cosf(prevFrame), 0, -sinf(prevFrame)) * 5.0f);
 
 			camera.update(deltaTime);
 
 			defferedRenderer.renderScene(scene, lightManager, camera);
-			////glowEffect.renderGlow(defferedRenderer.getFinalTexture(), scene, camera);
+			glowEffect.renderGlow(defferedRenderer.getFinalTexture(), scene, camera);
 
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			fullscreenQuad.drawTexture(defferedRenderer.getFinalTexture());
+			fullscreenQuad.drawTexture(glowEffect.getFinalTexture());
 
 			window.swapBuffer();
 		}
-//*/
+/*/
 	}
 	catch (const char * message) {
 		printf("Error: %s", message);

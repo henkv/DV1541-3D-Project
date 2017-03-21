@@ -11,11 +11,11 @@ OK	o Parsing and rendering an existing model format
 	o Displacement mapping using Tessellation hardware
 
 Hannah
-	o Normal mapping
+OK	o SSAO
 OK	o Back face culling using Geometry Shader
 OK	o Glow-effect
 
 Walter
 OK	o Shadow mapping
 	o View frustum culling against a quadtree
-	o Gaussian filter
+OK	o Gaussian filter
