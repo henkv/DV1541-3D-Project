@@ -58,11 +58,11 @@ int main()
 			camera.update(deltaTime);
 
 			defferedRenderer.renderScene(scene, lightManager, camera);
-			glowEffect.renderGlow(defferedRenderer.getFinalTexture(), scene, camera);
+			////glowEffect.renderGlow(defferedRenderer.getFinalTexture(), scene, camera);
 
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			fullscreenQuad.drawTexture(glowEffect.getFinalTexture());
+			fullscreenQuad.drawTexture(defferedRenderer.getFinalTexture());
 
 			window.swapBuffer();
 		}

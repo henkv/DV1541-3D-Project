@@ -2,6 +2,7 @@
 #include <fstream>
 #include <stdio.h>
 #include <glm\gtc\type_ptr.hpp>
+#include <string>
 
 GLuint Shader::activeProgram = GL_NONE;
 
@@ -13,8 +14,7 @@ GLuint Shader::loadShader(GLenum shaderType, const GLchar * filePath)
 	std::string text = { std::istreambuf_iterator<char>(file),  std::istreambuf_iterator<char>() };
 	file.close();
 
-	if (text.length() == 0)
-		throw "shader source empty";
+	if (!file) printf("file '%s' does not exist\n", filePath);
 
 	const GLchar * textPtr = text.c_str();
 	glShaderSource(shader, 1, &textPtr, NULL);
