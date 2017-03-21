@@ -45,6 +45,11 @@ void Model::setPosition(vec3 position)
 	worldMatrix = translate(mat4(), position);
 }
 
+vec3 Model::getPosition()
+{
+	return position;
+}
+
 void Model::draw(Shader & shader)
 {
 	shader.setUniform("worldMatrix", worldMatrix);

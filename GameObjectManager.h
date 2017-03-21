@@ -1,12 +1,17 @@
 #pragma once
 #include <map>
 #include "GameObject.h"
+#include "Camera.h"
+#include "Model.h"
 
 class GameObjectManager : GameObject
 {
 private:
 	typedef std::map<uid_t, GameObject*> map_t;
 	map_t objects;
+
+	//help
+	bool sort(Camera & camera, GameObject* objectLeft, GameObject* objectRight);
 public:
 	GameObjectManager();
 	~GameObjectManager();
@@ -14,8 +19,8 @@ public:
 	void add(GameObject* object);
 	void remove(uid_t objectId);
 	int size();
-	GameObject * getObjectPointer(int id);
-	void setObjectPointer(int id, GameObject * object);
+	void frontToBackSort(Camera & camera);
+
 
 	// Inherited via GameObject
 	virtual void draw(Shader & shader) override;

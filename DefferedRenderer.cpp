@@ -122,34 +122,9 @@ void DefferedRenderer::lightPass(Camera & camera, LightManager & lights)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void DefferedRenderer::frontToBackSort(Camera & camera, GameObjectManager & gameObjects)
-{
-	bool swapped;
-	int objects = gameObjects.size();
-	for (int i = 0; i < objects - 1; i++)
-	{
-		swapped = false;
-		for (int j = 0; i < objects - 1; j++)
-		{
-			if (gameObjects.getObjectPointer(j) - camera.getPosition() > gameObjects.getObjectPointer(j) - camera.getPosition())
-			{
-				GameObject * temp = gameObjects.getObjectPointer(j);
-				gameObjects.setObjectPointer(j, gameObjects.getObjectPointer(j + 1));
-				gameObjects.setObjectPointer(j + 1, temp);
-				swapped = true;
-			}
-			//https://www.gamedev.net/topic/567728-front-to-back-rendering/
-		}
-		if (swapped == false)
-		{
-			break;
-		}
-	}
-}
-
 void DefferedRenderer::renderScene(GameObjectManager & gameObjects, LightManager & lights, Camera & camera)
 {
-	frontToBackSort(camera, gameObjects);
+	gameObjects.frontToBackSort(camera);
 	geometryPass(camera, gameObjects);
 	lightPass(camera, lights);
 }

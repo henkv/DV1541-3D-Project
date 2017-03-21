@@ -33,7 +33,6 @@ private:
 
 	void geometryPass(Camera & camera, GameObjectManager & gameObjects);
 	void lightPass(Camera & camera, LightManager & lights);
-	void frontToBackSort(Camera & camera, GameObjectManager & gameObjects);
 
 public:
 	DefferedRenderer(int width, int height);
