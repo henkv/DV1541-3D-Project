@@ -10,6 +10,7 @@ layout(location = 0) out vec4 Color;
 uniform sampler2D Positions;
 uniform sampler2D Normals;
 uniform sampler2D ColorSpecs;
+uniform sampler2D SSAOMap;
 
 uniform vec3 viewPosition;
 
@@ -56,7 +57,7 @@ float calcAttenuation(float dist, float constant, float linear, float quadratic)
 	return (1.0f / (constant + linear * dist + quadratic * (dist * dist)));
 }
 
-vec3 getPointLightSum(vec3 fragPosition, vec3 fragNormal, float specularStrength)
+vec3 getPointLightSum(vec3 fragPosition, vec3 fragNormal, float specularStrength, float ao)
 {
 	float constant	= 1.0f;
 	float linear		= 0.045f;
@@ -65,7 +66,7 @@ vec3 getPointLightSum(vec3 fragPosition, vec3 fragNormal, float specularStrength
 	vec3 ambientColor = vec3(1, 1, 1);
 	float ambientStrength = 0.1;
 
-	vec3 lightSum = ambientColor * ambientStrength;
+	vec3 lightSum = ambientColor * ambientStrength * ao;
 	for(int i = 0; i < nrOfLights; i++)
 	{
 		float dist = length(lights[i].position - fragPosition);
@@ -110,9 +111,9 @@ float getShadowFactor(vec3 fragPosition, vec3 fragNormal, vec3 lightDir, mat4 li
 	return 1 - shadow;
 }
 
-vec3 getSunLight(vec3 fragPosition, vec3 fragNormal)
+vec3 getSunLight(vec3 fragPosition, vec3 fragNormal, float ao)
 {
-	float ambientFactor = 0.0;
+	float ambientFactor = 0.2 * ao;
 	float shadowFactor = getShadowFactor(fragPosition, fragNormal, -sunDirection, sunLightSpaceMatrix, sunShadowMap);
 	float diffuseFactor = max(dot(fragNormal, -sunDirection), 0.0);
 
@@ -127,10 +128,12 @@ void main()
 	vec3 color = colorSpec.rgb;
 	float specularStrength = colorSpec.a;
 
-	vec3 lightSum = getPointLightSum(position, normal, specularStrength);
-	lightSum += getSunLight(position, normal);
+	float ambientFactor = texture(SSAOMap, FragTexCoord).x;
+
+	vec3 lightSum = getPointLightSum(position, normal, specularStrength, ambientFactor);
+	lightSum += getSunLight(position, normal, ambientFactor);
 
 
-	Color = vec4(lightSum * color, 1);
+	Color = vec4(color * lightSum, 1);
 
 }

@@ -166,6 +166,7 @@
     <ClCompile Include="FileLoader.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GlowEffect.cpp" />
+    <ClCompile Include="GaussianBlur.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="libs\glad-4.5-core\src\glad.c" />
     <ClCompile Include="Light.cpp" />
@@ -180,6 +181,7 @@
     <ClCompile Include="ObjFile.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShadowMap.cpp" />
+    <ClCompile Include="SSAO.cpp" />
     <ClCompile Include="Vertex.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
@@ -189,6 +191,7 @@
     <ClInclude Include="FileLoader.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GlowEffect.h" />
+    <ClInclude Include="GaussianBlur.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="LightManager.h" />
@@ -201,6 +204,7 @@
     <ClInclude Include="ObjFile.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShadowMap.h" />
+    <ClInclude Include="SSAO.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

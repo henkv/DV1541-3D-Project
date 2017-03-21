@@ -35,7 +35,7 @@ void GlowEffect::createBlurBuffers(int width, int height)
 {
 	glGenFramebuffers(2, blurFramebuffers);
 	glGenTextures(2, blurTextures);
-
+		
 	for (int i = 0; i < 2; i++)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, blurFramebuffers[i]);
@@ -100,6 +100,7 @@ GlowEffect::GlowEffect(int width, int height)
 	, blurEffectH("shaders/FullscreenQuad.vert", "shaders/BlurEffectHorizontal.frag")
 	, blurEffectV("shaders/FullscreenQuad.vert", "shaders/BlurEffectVertical.frag")
 	, mergeShader("shaders/FullscreenQuad.vert", "shaders/GlowMerge.frag")
+	, gaussianBlur(width, height)
 {
 	createGlowBuffers(width, height);
 	createBlurBuffers(width, height);
@@ -150,14 +151,14 @@ void GlowEffect::blurGlowTexutre()
 void GlowEffect::renderGlow(GLuint sceneTexture, GameObjectManager & glowObjects, Camera & camera)
 {
 	renderGlowTexture(glowObjects, camera);
-	blurGlowTexutre();
+	gaussianBlur.blur(glowTexture, 64);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, finalFramebuffer);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	mergeShader.use();
 	mergeShader.setTexture2D(0, "scene", sceneTexture);
-	mergeShader.setTexture2D(1, "glow", glowTexture);
+	mergeShader.setTexture2D(1, "glow", gaussianBlur.getBlurTexture());
 
 	fullscreenQuad.draw();
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);

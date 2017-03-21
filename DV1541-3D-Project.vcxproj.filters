@@ -65,6 +65,8 @@
     <ClCompile Include="FileLoader.cpp">
       <Filter>Headers</Filter>
     </ClCompile>
+    <ClCompile Include="SSAO.cpp" />
+    <ClCompile Include="GaussianBlur.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -127,6 +129,8 @@
     <ClInclude Include="FileLoader.h">
       <Filter>Sources</Filter>
     </ClInclude>
+    <ClInclude Include="SSAO.h" />
+    <ClInclude Include="GaussianBlur.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\BackfaceCulling.glsl">
