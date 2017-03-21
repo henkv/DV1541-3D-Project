@@ -1,8 +1,12 @@
 #pragma once
+#include <glm\glm.hpp>
+
 class Input
 {
 private:
+	static glm::vec2 mousePos;
 	static bool keys[1024];
+	static bool mouseButtons[8];
 	
 public:
 	enum Key {
@@ -130,8 +134,29 @@ public:
 		, KEY_MENU = 348
 	};
 
+	enum Mouse {
+		  MOUSE_BUTTON_1      = 0
+		, MOUSE_BUTTON_2      = 1
+		, MOUSE_BUTTON_3      = 2
+		, MOUSE_BUTTON_4      = 3
+		, MOUSE_BUTTON_5      = 4
+		, MOUSE_BUTTON_6      = 5
+		, MOUSE_BUTTON_7      = 6
+		, MOUSE_BUTTON_8      = 7
+		, MOUSE_BUTTON_LAST   = 8
+		, MOUSE_BUTTON_LEFT   = 0
+		, MOUSE_BUTTON_RIGHT  = 1
+		, MOUSE_BUTTON_MIDDLE = 2
+	};
+
 	static bool getKey(Key keyCode);
 	static void setKey(Key keyCode, bool state);
+
+	static bool getMouseButton(Mouse keyCode);
+	static void setMouseButton(Mouse keyCode, bool state);
+
+	static void setMousePos(float x, float y);
+	static glm::vec2 getMousePos();
 
 };
 

@@ -7,6 +7,8 @@
 class Window
 {
 private:
+	static void mouseButton(GLFWwindow* window, int button, int action, int mods);
+	static void mouseMove(GLFWwindow* window, double xpos, double ypos);
 	static void error(int error, const char * message);
 	static void key(GLFWwindow* window, int key, int scancode, int action, int mods);
 
