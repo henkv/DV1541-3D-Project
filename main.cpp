@@ -55,7 +55,6 @@ int main()
 			deltaTime = window.getTime() - prevFrame;
 			prevFrame = window.getTime();
 
-			//sun.setPosition(vec3(cosf(prevFrame), 0.0f, sinf(prevFrame))* 3.0f);
 			planet.setPosition(vec3(cosf(prevFrame), 0, sinf(prevFrame)) * 2.5f);
 			manet.setPosition(vec3(cosf(prevFrame), 0, -sinf(prevFrame)) * 5.0f);
 

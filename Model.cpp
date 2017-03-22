@@ -35,11 +35,6 @@ void Model::setPosition(vec3 newPosition)
 	this->position = newPosition;
 }
 
-vec3 Model::getPosition()
-{
-	return position;
-}
-
 
 void Model::drawTesselated(Shader & shader)
 {
@@ -48,6 +43,11 @@ void Model::drawTesselated(Shader & shader)
 	mesh.drawTesselated();
 }
 
+
+vec3 Model::getPosition()
+{
+	return position;
+}
 
 void Model::draw(Shader & shader)
 {
