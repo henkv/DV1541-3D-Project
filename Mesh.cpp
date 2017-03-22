@@ -25,6 +25,13 @@ void Mesh::draw()
 	glDrawArrays(GL_TRIANGLES, 0, vertexArrayLength);
 }
 
+void Mesh::drawTesselated()
+{
+	glPatchParameteri(GL_PATCH_VERTICES, 3);
+	glBindVertexArray(vertexArray);
+	glDrawArrays(GL_PATCHES, 0, vertexArrayLength);
+}
+
 Mesh::Mesh(std::vector<Vertex>& vertices)
 	: vertices(vertices) 
 {

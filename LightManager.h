@@ -6,7 +6,7 @@
 //#include "Light.h"
 using namespace glm;
 
-class LightManager : public GameObject
+class LightManager
 {
 public:
 	struct Light
@@ -36,9 +36,5 @@ public:
 	~LightManager();
 
 	void add(Light & light);
-
-	// Inherited via GameObject
-	virtual void draw(Shader & shader) override;
-	virtual void update(float delta) override;
 };
 

@@ -24,8 +24,13 @@ public:
 	void move(vec3 delta);
 	void setPosition(vec3 position);
 
+
 	// Inherited via GameObject
 	virtual void draw(Shader & shader) override;
+
+	virtual void drawTesselated(Shader & shader) override;
+
 	virtual void update(float delta) override;
+
 };
 

@@ -26,6 +26,14 @@ void GameObjectManager::update(float delta)
 	}
 }
 
+void GameObjectManager::drawTesselated(Shader & shader)
+{
+	for (auto &object : objects)
+	{
+		object->drawTesselated(shader);
+	}
+}
+
 void GameObjectManager::draw(Shader & shader)
 {
 	for (auto &object : objects)

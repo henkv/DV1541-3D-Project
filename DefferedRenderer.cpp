@@ -3,6 +3,10 @@
 
 DefferedRenderer::DefferedRenderer(int width, int height)
 	: geometryShader("shaders/GeometryPass.vert", "shaders/GeometryPass.frag")
+	, geometryShaderTesselated( "shaders/GeometryPass-Tesselated.vert"
+							  , "shaders/GeometryPass-Tesselated.tesc"
+							  , "shaders/GeometryPass-Tesselated.tese"
+							  , "shaders/GeometryPass-Tesselated.frag")
 	, lightShader("shaders/LightPass.vert", "shaders/LightPass.frag")
 	, sunShadowMap(width, height)
 	, ssao(width, height)
@@ -97,11 +101,12 @@ void DefferedRenderer::geometryPass(Camera & camera, GameObjectManager & gameObj
 	glBindFramebuffer(GL_FRAMEBUFFER, geometryFramebuffer);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	geometryShader.use();
-	geometryShader.setUniform("viewMatrix", camera.getViewMatrix());
-	geometryShader.setUniform("projectionMatrix", camera.getProjectionMatrix());
+	geometryShaderTesselated.use();
+	geometryShaderTesselated.setUniform("eyePosition", camera.getPosition());
+	geometryShaderTesselated.setUniform("viewMatrix", camera.getViewMatrix());
+	geometryShaderTesselated.setUniform("projectionMatrix", camera.getProjectionMatrix());
 
-	gameObjects.draw(geometryShader);
+	gameObjects.drawTesselated(geometryShaderTesselated);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

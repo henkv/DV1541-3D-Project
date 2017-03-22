@@ -14,8 +14,6 @@ private:
 	GaussianBlur gaussianBlur;
 
 	Shader glowExtract;
-	Shader blurEffectH;
-	Shader blurEffectV;
 	Shader mergeShader;
 
 	GLuint glowFramebuffer;
@@ -32,7 +30,6 @@ private:
 	void createFinalBuffers(int width, int height);
 
 	void renderGlowTexture(GameObjectManager & objects, Camera & camera);
-	void blurGlowTexutre();
 
 public:
 	GlowEffect(int width, int height);

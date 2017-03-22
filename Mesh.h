@@ -21,5 +21,6 @@ public:
 	~Mesh();
 
 	void draw();
+	void drawTesselated();
 };
 

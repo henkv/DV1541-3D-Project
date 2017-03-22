@@ -8,8 +8,8 @@ uniform sampler2D glow;
 
 void main()
 {
-	const float gamma = 2.0f;
-	const float exposure = 1.0f;
+	const float gamma = 1.5f;
+	const float exposure = 3.0f;
 
 	vec3 sceneColor = texture(scene, TexCoords).rgb;
 	vec3 glowColor = texture(glow, TexCoords).rgb;

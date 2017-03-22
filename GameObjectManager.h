@@ -15,5 +15,7 @@ public:
 	// Inherited via GameObject
 	virtual void draw(Shader & shader) override;
 	virtual void update(float delta) override;
+
+	virtual void drawTesselated(Shader & shader) override;
 };
 
