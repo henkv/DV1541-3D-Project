@@ -44,6 +44,11 @@ void Model::drawTesselated(Shader & shader)
 }
 
 
+vec3 Model::getPosition()
+{
+	return position;
+}
+
 void Model::draw(Shader & shader)
 {
 	shader.setUniform("worldMatrix", worldMatrix);

@@ -5,6 +5,7 @@
 #include "Material.h"
 #include "GameObject.h"
 
+
 class Model : public GameObject
 {
 private:
@@ -23,6 +24,8 @@ public:
 
 	void move(vec3 delta);
 	void setPosition(vec3 position);
+	vec3 getPosition();
+
 
 
 	// Inherited via GameObject
