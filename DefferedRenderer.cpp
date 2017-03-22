@@ -137,7 +137,6 @@ void DefferedRenderer::lightPass(Camera & camera, LightManager & lights)
 
 void DefferedRenderer::renderScene(GameObjectManager & gameObjects, LightManager & lights, Camera & camera)
 {
-	gameObjects.frontToBackSort(camera);
 	geometryPass(camera, gameObjects);
 	lightPass(camera, lights);
 }

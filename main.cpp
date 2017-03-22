@@ -59,6 +59,8 @@ int main()
 			manet.setPosition(vec3(cosf(prevFrame), 0, -sinf(prevFrame)) * 5.0f);
 
 			camera.update(deltaTime);
+			
+			scene.frontToBackSort(camera);
 
 			defferedRenderer.renderScene(scene, lightManager, camera);
 			glowEffect.renderGlow(defferedRenderer.getFinalTexture(), scene, camera);

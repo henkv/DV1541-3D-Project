@@ -7,19 +7,14 @@
 class GameObjectManager : GameObject
 {
 private:
-	typedef std::map<uid_t, GameObject*> map_t;
-	map_t objects;
-
-	//help
-	bool sort(Camera & camera, GameObject* objectLeft, GameObject* objectRight);
 	std::vector<GameObject*> objects;
+
+	bool sort(Camera & camera, GameObject* objectLeft, GameObject* objectRight);
 public:
 	GameObjectManager();
 	~GameObjectManager();
 
 	void add(GameObject* object);
-	void remove(uid_t objectId);
-	int size();
 	void frontToBackSort(Camera & camera);
 
 

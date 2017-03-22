@@ -18,17 +18,6 @@ void GameObjectManager::add(GameObject* object)
 }
 
 
-
-int GameObjectManager::size()
-{
-	int result = 0;
-	for (auto &object : objects)
-	{
-		result++;
-	}
-	return result;
-}
-
 void GameObjectManager::update(float delta)
 {
 	for (auto &object : objects)
@@ -80,31 +69,16 @@ void GameObjectManager::frontToBackSort(Camera & camera)
 
 bool GameObjectManager::sort(Camera & camera, GameObject * objectLeft, GameObject * objectRight )
 {
-	bool result = false;
-	float left;
-	float xLeft = camera.getPosition().x - dynamic_cast<Model*>(objectLeft)->getPosition().x;
-	xLeft = xLeft * xLeft;
-	float yLeft = camera.getPosition().y - dynamic_cast<Model*>(objectLeft)->getPosition().y;
-	yLeft = yLeft * yLeft;
-	float zLeft = camera.getPosition().z - dynamic_cast<Model*>(objectLeft)->getPosition().z;
-	zLeft = zLeft * zLeft;
-	left = xLeft + yLeft + zLeft;
-	left = sqrt(left);
+	Model* left = dynamic_cast<Model*>(objectLeft);
+	Model* right = dynamic_cast<Model*>(objectRight);
 
-	float right;
-	float xRight = camera.getPosition().x - dynamic_cast<Model*>(objectRight)->getPosition().x;
-	xRight = xRight * xRight;
-	float yRight = camera.getPosition().y - dynamic_cast<Model*>(objectRight)->getPosition().y;
-	yRight = yRight * yRight;
-	float zRight = camera.getPosition().z - dynamic_cast<Model*>(objectRight)->getPosition().z;
-	zRight = zRight * zRight;
-	right = xRight + yRight + zRight;
-	right = sqrt(right);
+	vec3 cameraPos = camera.getPosition();
 
-	if (left > right)
-	{
-		result = true;
-	}
+	vec3 leftPos = left == nullptr ? cameraPos : left->getPosition();
+	vec3 rightPos = right == nullptr ? cameraPos : right->getPosition();
 
-	return result;
+	float leftDistance = length(leftPos - cameraPos);
+	float rightDistance = length(rightPos - cameraPos);
+
+	return leftDistance > rightDistance;
 }
