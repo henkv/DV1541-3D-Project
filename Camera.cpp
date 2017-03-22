@@ -104,7 +104,8 @@ void Camera::update(float delta)
 		rotate(deltaMouse.x, -deltaMouse.y);
 	}
 
-	static float movespeed = 2.0f;
+	float movespeed = 2.0f;
+	movespeed += Input::getKey(Input::KEY_LEFT_SHIFT) ? 4 : 0;
 
 	float forward = 0;
 	forward += Input::getKey(Input::KEY_W) * delta;
@@ -116,7 +117,7 @@ void Camera::update(float delta)
 
 	vec3 deltaMove(0, 0, 0);
 	deltaMove += direction * forward * movespeed;
-	deltaMove += cross(up, direction) * strafe * movespeed;
+	deltaMove += cross(up, direction) * strafe * movespeed * 1.5f;
 
 	deltaMove.y += Input::getKey(Input::KEY_SPACE) * delta * 2;
 	deltaMove.y -= Input::getKey(Input::KEY_LEFT_CONTROL) * delta * 2;
