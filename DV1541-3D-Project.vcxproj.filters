@@ -16,9 +16,6 @@
     <ClCompile Include="GameObjectManager.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="libs\glad-4.5-core\src\glad.c">
-      <Filter>Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
@@ -63,10 +60,15 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="FileLoader.cpp">
-      <Filter>Headers</Filter>
+      <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="SSAO.cpp" />
-    <ClCompile Include="GaussianBlur.cpp" />
+    <ClCompile Include="SSAO.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="GaussianBlur.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="libs\glad-4.5-core\src\glad.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -127,10 +129,14 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="FileLoader.h">
-      <Filter>Sources</Filter>
+      <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="SSAO.h" />
-    <ClInclude Include="GaussianBlur.h" />
+    <ClInclude Include="SSAO.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="GaussianBlur.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\BackfaceCulling.glsl">

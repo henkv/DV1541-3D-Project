@@ -5,11 +5,13 @@
 #include "glm\glm.hpp"
 #include "Camera.h"
 #include <string>
+#include "GaussianBlur.h"
 
 class SSAO
 {
 private:
 	FullscreenQuad fsQuad;
+	GaussianBlur blur;
 
 	Shader ssaoShader;
 

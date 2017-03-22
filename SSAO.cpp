@@ -39,7 +39,8 @@ void SSAO::createBuffers(int width, int height)
 
 
 SSAO::SSAO(int width, int height)
-	:ssaoShader("shaders/SSAO.vert", "shaders/SSAO.frag")
+	: ssaoShader("shaders/SSAO.vert", "shaders/SSAO.frag")
+	, blur(width, height)
 {
 	createBuffers(width, height);
 
@@ -47,7 +48,8 @@ SSAO::SSAO(int width, int height)
 	ssaoShader.setUniform("nrOfRandomPoints", 32);
 	for (int i = 0; i < 32; i++)
 	{
-		ssaoShader.setUniform(("randomPoints[" + std::to_string(i) + "]").c_str(),
+		ssaoShader.setUniform(
+			("randomPoints[" + std::to_string(i) + "]").c_str(),
 			normalize(vec3(random(), random(), random())) * 0.1f
 		);
 	}
@@ -63,10 +65,16 @@ void SSAO::render(Camera & camera, GLuint viewPositionMap)
 	ssaoShader.setTexture2D(0, "viewPositions", viewPositionMap);
 	ssaoShader.setUniform("projectionMatrix", camera.getProjectionMatrix());
 
-
 	glBindFramebuffer(GL_FRAMEBUFFER, framebuffer);
+
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	fsQuad.draw();
+	
+	blur.blur(ssaoMap, 16);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+	fsQuad.drawTexture(blur.getBlurTexture());
+
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
