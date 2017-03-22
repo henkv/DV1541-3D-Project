@@ -8,6 +8,7 @@ public:
 	const uid_t UID = UID_BASE++;
 
 	virtual void draw(Shader & shader) = 0;
+	virtual void drawTesselated(Shader & shader) = 0;
 	virtual void update(float delta) = 0;
 
 private:

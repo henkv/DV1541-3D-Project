@@ -14,6 +14,7 @@ private:
 	FullscreenQuad fullscreenQuad;
 
 	Shader geometryShader;
+	Shader geometryShaderTesselated;
 	Shader lightShader;
 
 	ShadowMap sunShadowMap;

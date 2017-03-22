@@ -5,7 +5,7 @@
 
 using namespace glm;
 
-class Light : public GameObject
+class Light
 {
 private:
 	vec3 position;

@@ -97,8 +97,6 @@ void GlowEffect::createFinalBuffers(int width, int height)
 
 GlowEffect::GlowEffect(int width, int height)
 	: glowExtract("shaders/GlowExtract.vert", "shaders/GlowExtract.frag")
-	, blurEffectH("shaders/FullscreenQuad.vert", "shaders/BlurEffectHorizontal.frag")
-	, blurEffectV("shaders/FullscreenQuad.vert", "shaders/BlurEffectVertical.frag")
 	, mergeShader("shaders/FullscreenQuad.vert", "shaders/GlowMerge.frag")
 	, gaussianBlur(width, height)
 {
@@ -110,7 +108,6 @@ GlowEffect::GlowEffect(int width, int height)
 GlowEffect::~GlowEffect()
 {
 }
-
 
 
 void GlowEffect::renderGlowTexture(GameObjectManager & objects, Camera & camera)
@@ -127,26 +124,6 @@ void GlowEffect::renderGlowTexture(GameObjectManager & objects, Camera & camera)
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
-void GlowEffect::blurGlowTexutre()
-{
-	static int passes = 100;
-	bool horizontalPass = true;
-	Shader * blurEffect = &blurEffectH;
-
-	for (int i = 1; i <= passes; i++)
-	{
-		glBindFramebuffer(GL_FRAMEBUFFER, i == passes ? glowFramebuffer : blurFramebuffers[horizontalPass]);
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		blurEffect->use();
-		blurEffect->setTexture2D(0, "glow", i == 1 ? glowTexture : blurTextures[!horizontalPass]);
-		fullscreenQuad.draw();
-
-		horizontalPass = !horizontalPass;
-		blurEffect = &(horizontalPass ? blurEffectH : blurEffectV);
-	}
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-}
 
 void GlowEffect::renderGlow(GLuint sceneTexture, GameObjectManager & glowObjects, Camera & camera)
 {

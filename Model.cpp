@@ -40,6 +40,15 @@ vec3 Model::getPosition()
 	return position;
 }
 
+
+void Model::drawTesselated(Shader & shader)
+{
+	shader.setUniform("worldMatrix", worldMatrix);
+	shader.setTexture2D(0, "diffuseMap", material.getDiffuseMap());
+	mesh.drawTesselated();
+}
+
+
 void Model::draw(Shader & shader)
 {
 	shader.setUniform("worldMatrix", worldMatrix);

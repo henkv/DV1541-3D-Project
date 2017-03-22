@@ -28,13 +28,3 @@ void LightManager::add(Light & light)
 	glBindBuffer(GL_UNIFORM_BUFFER, 0);
 }
 
-
-void LightManager::draw(Shader & shader)
-{
-}
-
-
-void LightManager::update(float delta)
-{
-
-}

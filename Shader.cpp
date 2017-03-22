@@ -94,6 +94,41 @@ Shader::Shader(const char * vertexPath, const char * geometryPath, const char * 
 	}
 }
 
+Shader::Shader(const char * vertexPath, const char * controlPath, const char * evaulationPath, const char * fragmentPath)
+{
+	GLuint vertexShader = loadShader(GL_VERTEX_SHADER, vertexPath);
+	GLuint controlShader = loadShader(GL_TESS_CONTROL_SHADER, controlPath);
+	GLuint evaluationShader = loadShader(GL_TESS_EVALUATION_SHADER, evaulationPath);
+	GLuint fragmentShader = loadShader(GL_FRAGMENT_SHADER, fragmentPath);
+
+	program = glCreateProgram();
+	glAttachShader(program, vertexShader);
+	glAttachShader(program, controlShader);
+	glAttachShader(program, evaluationShader);
+	glAttachShader(program, fragmentShader);
+
+	glLinkProgram(program);
+
+	glDetachShader(program, vertexShader);
+	glDetachShader(program, controlShader);
+	glDetachShader(program, evaluationShader);
+	glDetachShader(program, fragmentShader);
+
+	glDeleteShader(vertexShader);
+	glDeleteShader(controlShader);
+	glDeleteShader(evaluationShader);
+	glDeleteShader(fragmentShader);
+
+	GLint success = 0;
+	glGetProgramiv(program, GL_LINK_STATUS, &success);
+	if (success == GL_FALSE)
+	{
+		GLchar programLog[512] = { NULL };
+		glGetProgramInfoLog(program, 512, NULL, programLog);
+		throw programLog;
+	}
+}
+
 Shader::~Shader()
 {
 	glDeleteProgram(program);
@@ -108,7 +143,7 @@ void Shader::use()
 GLint Shader::getUniform(const GLchar * name)
 {
 	if (activeProgram != program)
-		throw "cant get uniform, shader not active";
+		throw printf("cant get uniform, shader not active");
 
 	GLint location = glGetUniformLocation(program, name);
 
