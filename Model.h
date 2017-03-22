@@ -27,6 +27,7 @@ public:
 	vec3 getPosition();
 
 
+
 	// Inherited via GameObject
 	virtual void draw(Shader & shader) override;
 

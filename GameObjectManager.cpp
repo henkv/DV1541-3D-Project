@@ -18,6 +18,7 @@ void GameObjectManager::add(GameObject* object)
 }
 
 
+
 void GameObjectManager::update(float delta)
 {
 	for (auto &object : objects)
