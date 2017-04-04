@@ -27,20 +27,38 @@ float MtlFile::parseFloat(std::stringstream & stream)
 
 GLuint MtlFile::loadTexture(std::string filePath)
 {
-	GLuint tex_2d;
+	//GLuint tex_2d;
 
-	std::vector<GLubyte> image;
-	GLuint width, height;
-	GLuint error = lodepng::decode(image, width, height, filePath);
+	//std::vector<GLubyte> image;
+	//GLuint width, height;
+	//GLuint error = lodepng::decode(image, width, height, filePath);
 
-	if (error) throw "erorr";
+	//if (error) throw "erorr";
 
-	glGenTextures(1, &tex_2d);
-	glBindTexture(GL_TEXTURE_2D, tex_2d);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, &image[0]);
-	glBindTexture(GL_TEXTURE_2D, 0);
+	//glGenTextures(1, &tex_2d);
+	//glBindTexture(GL_TEXTURE_2D, tex_2d);
+	//glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, &image[0]);
+	//glBindTexture(GL_TEXTURE_2D, 0);
+
+	GLuint tex_2d = SOIL_load_OGL_texture
+	(
+		filePath.c_str(),
+		SOIL_LOAD_AUTO,
+		SOIL_CREATE_NEW_ID,
+		SOIL_FLAG_MIPMAPS | SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_COMPRESS_TO_DXT
+	);
 
 	return tex_2d;
+}
+
+void replaceAll(std::string& str, const std::string& from, const std::string& to) {
+	if (from.empty())
+		return;
+	size_t start_pos = 0;
+	while ((start_pos = str.find(from, start_pos)) != std::string::npos) {
+		str.replace(start_pos, from.length(), to);
+		start_pos += to.length(); // In case 'to' contains 'from', like replacing 'x' with 'yx'
+	}
 }
 
 MtlFile::MtlFile(std::string filePath)

@@ -10,6 +10,7 @@
 #include "DefferedRenderer.h"
 #include "GlowEffect.h"
 #include "FileLoader.h"
+#include "MtlFile.h"
 
 const size_t WINDOW_WIDTH = 800;
 const size_t WINDOW_HEIGHT = 600;
@@ -21,6 +22,8 @@ int main()
 	try {
 //*/
 		Window window = { "DV1541 3D Project", WINDOW_WIDTH, WINDOW_HEIGHT };
+		window.use();
+
 		Camera camera = { {0, 0, -5}, {0,0,0}, {0,1,0} };
 
 		FullscreenQuad fullscreenQuad;
@@ -47,6 +50,7 @@ int main()
 		DefferedRenderer defferedRenderer(WINDOW_WIDTH, WINDOW_HEIGHT);
 		GlowEffect glowEffect(WINDOW_WIDTH, WINDOW_HEIGHT);
 
+
 		float prevFrame = 0;
 		float deltaTime = 0;
 		while (window.isOpen()) {
@@ -62,6 +66,7 @@ int main()
 
 			defferedRenderer.renderScene(scene, lightManager, camera);
 			glowEffect.renderGlow(defferedRenderer.getFinalTexture(), scene, camera);
+
 
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
