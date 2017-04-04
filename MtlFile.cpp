@@ -1,7 +1,7 @@
 #include "MtlFile.h"
 #include <fstream>
 #include <SOIL.h>
-
+#include <lodepng.h>
 
 glm::vec3 MtlFile::parseVec3(std::stringstream & stream)
 {
@@ -27,18 +27,18 @@ float MtlFile::parseFloat(std::stringstream & stream)
 
 GLuint MtlFile::loadTexture(std::string filePath)
 {
-	GLuint tex_2d = SOIL_load_OGL_texture
-	(
-		filePath.c_str(),
-		SOIL_LOAD_AUTO,
-		SOIL_CREATE_NEW_ID,
-		SOIL_FLAG_MIPMAPS | SOIL_FLAG_COMPRESS_TO_DXT
-	);
+	GLuint tex_2d;
 
-	if (0 == tex_2d)
-	{
-		printf("SOIL loading error: '%s'\n", SOIL_last_result());
-	}
+	std::vector<GLubyte> image;
+	GLuint width, height;
+	GLuint error = lodepng::decode(image, width, height, filePath);
+
+	if (error) throw "erorr";
+
+	glGenTextures(1, &tex_2d);
+	glBindTexture(GL_TEXTURE_2D, tex_2d);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, &image[0]);
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	return tex_2d;
 }
@@ -67,7 +67,7 @@ MtlFile::MtlFile(std::string filePath)
 		else if (str == "map_Kd")
 		{
 			std::getline(stream, str);
-			diffuseMapPath = folder.size() > 0 ? folder + "/" + str : str;
+			diffuseMapPath = folder.size() > 0 ? folder + "\\" + str : str;
 		}
 	}
 }

@@ -22,7 +22,6 @@ int main()
 //*/
 		Window window = { "DV1541 3D Project", WINDOW_WIDTH, WINDOW_HEIGHT };
 		Camera camera = { {0, 0, -5}, {0,0,0}, {0,1,0} };
-		Shader phongShader("shaders/Phong.vert", "shaders/Phong.frag");
 
 		FullscreenQuad fullscreenQuad;
 		GaussianBlur gaussianBlur(WINDOW_WIDTH, WINDOW_HEIGHT);

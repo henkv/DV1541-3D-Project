@@ -43,6 +43,9 @@ GLuint DefferedRenderer::generateColorTexture(int width, int height)
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glBindTexture(GL_TEXTURE_2D, 0);
 	return texture;
 }
 
@@ -101,12 +104,12 @@ void DefferedRenderer::geometryPass(Camera & camera, GameObjectManager & gameObj
 	glBindFramebuffer(GL_FRAMEBUFFER, geometryFramebuffer);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	geometryShaderTesselated.use();
-	geometryShaderTesselated.setUniform("eyePosition", camera.getPosition());
-	geometryShaderTesselated.setUniform("viewMatrix", camera.getViewMatrix());
-	geometryShaderTesselated.setUniform("projectionMatrix", camera.getProjectionMatrix());
+	geometryShader.use();
+	geometryShader.setUniform("eyePosition", camera.getPosition());
+	geometryShader.setUniform("viewMatrix", camera.getViewMatrix());
+	geometryShader.setUniform("projectionMatrix", camera.getProjectionMatrix());
 
-	gameObjects.drawTesselated(geometryShaderTesselated);
+	gameObjects.draw(geometryShader);
 
 	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

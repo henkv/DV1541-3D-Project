@@ -134,6 +134,6 @@ void main()
 	lightSum += getSunLight(position, normal, ambientFactor);
 
 
-	Color = vec4(color * lightSum, 1);
+	Color = vec4(lightSum, 1);
 
 }

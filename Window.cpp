@@ -43,7 +43,7 @@ Window::Window(const char * title, size_t width, size_t height)
 {
 	static void *e = glfwSetErrorCallback(error);
 
-	if (nrOfWindows == 0 && !glfwInit())
+	if (!glfwInit())
 		throw "failed to init glfw";
 	
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);

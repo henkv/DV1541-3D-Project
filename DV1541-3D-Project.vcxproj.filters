@@ -69,6 +69,7 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="libs\glad-4.5-core\src\glad.c" />
+    <ClCompile Include="libs\lodePNG\src\lodepng.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h">
@@ -223,6 +224,9 @@
     </Filter>
     <Filter Include="Sources">
       <UniqueIdentifier>{3ce105be-2dfb-456e-8102-5dc8a595e644}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="NewFilter1">
+      <UniqueIdentifier>{9d4b7793-231d-4d95-8008-8100edc814bd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
